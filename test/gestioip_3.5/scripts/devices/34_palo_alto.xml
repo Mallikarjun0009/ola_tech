@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='UTF-8'?> 
+
+<!-- Commands for Palo Alto devices -->
+
+<deviceGroupValues>
+
+    <deviceGroupName>Palo Alto PAN-OS</deviceGroupName>
+    <deviceGroupID>34</deviceGroupID>
+
+    <models>PA-500, PA-5020</models>
+
+    <loginPrompt>></loginPrompt>
+    <enablePrompt>#</enablePrompt>
+    <enableCommand>configure</enableCommand>
+    <usernameExpr>[[GENERIC_USERNAME_EXPR]]</usernameExpr>
+    <passwordExpr>[[GENERIC_PASSWORD_EXPR]]</passwordExpr>
+    <logoutCommand>quit</logoutCommand>
+    <pagerExpr>--More--</pagerExpr>
+    <pagerDisableCmd>set cli pager off</pagerDisableCmd>
+    <unsavedChangesMessage>The system has unsaved changes|Would you like to save them now|(Profile.Configuration) changes have occurred|Do you wish to save your configuration changes</unsavedChangesMessage>
+
+    <jobs>
+        <copyRunTftp>
+            <comment>Backup config config via TFTP</comment>
+            <jobType>copy_file</jobType>
+            <destConfigName>gip_CurrentConfig.xml</destConfigName>
+
+            <command>save config to gip_CurrentConfig.xml</command>
+            <return>#</return>
+            <command>tftp export configuration from [[DEST_CONFIG_NAME]] to [[SERVER_IP]]</command>
+            <return>#</return>
+        </copyRunTftp>
+
+        <copyRunScp>
+            <comment>Backup config config via SCP</comment>
+            <jobType>copy_file</jobType>
+            <destConfigName>gip_CurrentConfig.xml</destConfigName>
+
+            <command>save config to gip_CurrentConfig.xml</command>
+            <return>#</return>
+            <command>scp export configuration from [[DEST_CONFIG_NAME]] to [[SERVER_USERNAME]]@[[SERVER_IP]]:/[[SERVER_ROOT]]/</command>
+            <return>#</return>
+        </copyRunScp>
+    </jobs>
+
+</deviceGroupValues>

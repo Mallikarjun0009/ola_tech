@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='UTF-8'?> 
+
+<!-- Commands for HP devices -->
+
+<deviceGroupValues>
+
+    <deviceGroupName>ProCurve/ProVision</deviceGroupName>
+    <models>HP 3500, 5400zl, 6200yl, 6600, and 8200zl Switch Series</models>
+    <deviceGroupID>4</deviceGroupID>
+
+    <models></models>
+
+    <loginPrompt>></loginPrompt>
+    <enablePrompt>#|(enable)</enablePrompt>
+    <enableCommand>enable</enableCommand>
+    <usernameExpr>[[GENERIC_USERNAME_EXPR]]</usernameExpr>
+    <passwordExpr>[[GENERIC_PASSWORD_EXPR]]</passwordExpr>
+    <logoutCommand>logout</logoutCommand>
+<!---
+    <pagerDisableCmd>terminal length 0</pagerDisableCmd>
+-->
+    <pagerDisableCmd>no page</pagerDisableCmd>
+    <pagerExpr></pagerExpr>
+
+    <jobs>
+        <copyRunTftp>
+            <comment>Backup running config via TFTP</comment>
+            <jobType>copy_file</jobType>
+
+            <command>config</command>
+            <return>.*</return>
+            <command>console local-terminal none</command>
+            <return>[[ENABLE_PROMPT]]</return>
+            <command>exit</command>
+            <return>[[ENABLE_PROMPT]]</return>
+            <command>copy running-config tftp [[SERVER_IP]] [[CONFIG_NAME]][[SLEEP10]]</command>
+            <return>[[ENABLE_PROMPT]]</return>
+            <command>config</command>
+            <return>[[ENABLE_PROMPT]]</return>
+            <command>console local-terminal vt100</command>
+            <return>[[ENABLE_PROMPT]]</return>
+            <command>exit</command>
+            <return>[[ENABLE_PROMPT]]</return>
+        </copyRunTftp>
+
+        <copyTftpRun>
+            <comment>Restore running config from TFTP</comment>
+            <jobType>task</jobType>
+
+            <command>config</command>
+            <return>.*</return>
+            <command>console local-terminal none</command>
+            <return>[[ENABLE_PROMPT]]</return>
+            <command>exit</command>
+            <return>[[ENABLE_PROMPT]]</return>
+            <command>copy tftp startup-config [[SERVER_IP]] [[UPLOAD_CONFIG_NAME]]</command>
+            <return>Device may be rebooted, do you want to continue</return>
+            <command>y</command>
+            <return>[[ENABLE_PROMPT]]|Rebooting switch</return>
+        </copyTftpRun>
+
+    </jobs>
+
+</deviceGroupValues>

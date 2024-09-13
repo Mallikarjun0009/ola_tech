@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='UTF-8'?> 
+
+<!-- Commands for devices running AdTran AOS -->
+
+<deviceGroupValues>
+
+    <deviceGroupName>AdTran AOS</deviceGroupName>
+    <deviceGroupID>27</deviceGroupID>
+
+    <models>NetVanta</models>
+
+    <loginPrompt>></loginPrompt>
+    <enablePrompt>#|(enable)</enablePrompt>
+    <enableCommand>enable</enableCommand>
+    <usernameExpr>[[GENERIC_USERNAME_EXPR]]</usernameExpr>
+    <passwordExpr>[[GENERIC_PASSWORD_EXPR]]</passwordExpr>
+    <logoutCommand>exit</logoutCommand>
+    <pagerExpr>--More--</pagerExpr>
+    <pagerDisableCmd>terminal length 0</pagerDisableCmd>
+    <unsavedChangesMessage>The system has unsaved changes|Would you like to save them now|(Profile.Configuration) changes have occurred|Do you wish to save your configuration changes</unsavedChangesMessage>
+
+    <jobs>
+        <copyRunTftp>
+            <comment>Backup running config via TFTP</comment>
+            <jobType>copy_file</jobType>
+
+            <command>copy running-config tftp:</command>
+            <return>Address of remote host</return>
+            <command>[[SERVER_IP]]</command>
+            <return>Destination filename</return>
+            <command>[[CONFIG_NAME]]</command>
+            <return>Transfer Complete!</return>
+        </copyRunTftp>
+
+        <copyTftpRun>
+            <comment>Restore configuration from TFTP</comment>
+            <jobType>task</jobType>
+
+            <command>copy tftp running-config</command>
+            <return>Address of remote host</return>
+            <command>[[SERVER_IP]]</command>
+            <return>Source filename</return>
+            <command>[[UPLOAD_CONFIG_NAME]]</command>
+            <return>Transfer Complete</return>
+        </copyTftpRun>
+    </jobs>
+
+</deviceGroupValues>

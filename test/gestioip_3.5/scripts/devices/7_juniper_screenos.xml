@@ -1,0 +1,68 @@
+<?xml version='1.0' encoding='UTF-8'?> 
+
+<!-- Commands for devices running Juniper ScreenOS -->
+
+<deviceGroupValues>
+
+    <deviceGroupName>Juniper ScreenOS</deviceGroupName>
+    <deviceGroupID>7</deviceGroupID>
+
+    <models></models>
+
+    <loginPrompt>NO_PROMPT</loginPrompt>
+<!-- matches prompts like 'fwname(user)->' -->
+    <enablePrompt>.+(.+)-></enablePrompt>
+<!--
+    matches prompts ending in '->'
+    <enablePrompt>-></enablePrompt>
+-->
+    <enableCommand>cli</enableCommand>
+    <usernameExpr>[[GENERIC_USERNAME_EXPR]]</usernameExpr>
+    <passwordExpr>[[GENERIC_PASSWORD_EXPR]]</passwordExpr>
+    <logoutCommand>exit</logoutCommand>
+    <pagerExpr></pagerExpr>
+    <unsavedChangesMessage>Configuration modified, save</unsavedChangesMessage>
+
+    <jobs>
+	<comment>ScreenOS does not support FTP nor SCP</comment>
+
+        <copyRunTftp>
+	    <comment>Backup running config via TFTP using save config</comment>
+            <jobType>copy_file</jobType>
+	    <diffConfigIgnore>saved_cfg_timestamp</diffConfigIgnore>
+
+            <command>save config to tftp [[SERVER_IP]] [[CONFIG_NAME]]</command>
+            <return>TFTP Succeeded</return>
+        </copyRunTftp>
+
+        <copyRunTftp2>
+	    <comment>Backup running config via TFTP using get config</comment>
+            <jobType>copy_file</jobType>
+	    <diffConfigIgnore>saved_cfg_timestamp</diffConfigIgnore>
+
+            <command>get config > tftp [[SERVER_IP]] [[CONFIG_NAME]]</command>
+            <return>tftp success!</return>
+        </copyRunTftp2>
+
+        <copyRunTftpEth00>
+	    <comment>Backup running config via TFTP using get config and eth0/0</comment>
+            <jobType>copy_file</jobType>
+	    <diffConfigIgnore>saved_cfg_timestamp</diffConfigIgnore>
+
+            <command>get config > tftp [[SERVER_IP]] [[CONFIG_NAME]] from ethernet0/0</command>
+            <return>tftp success!</return>
+        </copyRunTftpEth00>
+
+        <getConfig>
+            <comment>get config</comment>
+            <jobType>fetch_command_output</jobType>
+	    <diffConfigIgnore>saved_cfg_timestamp</diffConfigIgnore>
+	    <commandTimeout>270</commandTimeout>
+
+            <command>get config[[IGNORE_ERRORS]]</command>
+            <return>[[ENABLE_PROMPT]]</return>
+        </getConfig>
+
+    </jobs>
+
+</deviceGroupValues>

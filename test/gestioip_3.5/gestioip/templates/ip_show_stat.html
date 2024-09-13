@@ -1,0 +1,230 @@
+
+
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm border border-warning text-center font-weight-bold pt-5">
+	  <h3>NETWORKS</h3>
+	</div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm border border-warning text-center font-weight-bold">
+		<div class="container-fluid">
+		  <div class="row">
+			<div class="col-sm border border-warning text-center font-weight-bold">
+			   {{ networks4_by_cat_message }}
+			</div>
+		  </div>
+		  <div class="row">
+			<div class="col-sm border border-warning">
+				<div class="container-fluid">
+				  <div class="row">
+					<div class="col-sm border border-warning">
+                      {{ CAT_NET4_TABLE }}
+					</div>
+				  <div class="row">
+					<div class="col-sm border border-warning">
+					  <canvas id="ChartCatNet4" style="border:1px solid #000000;"></canvas> 
+					</div>
+				  </div>
+				</div>
+		  </div>
+		</div>
+	</div>
+    <div class="col-sm border border-warning text-center font-weight-bold">
+		<div class="container-fluid">
+		  <div class="row">
+			<div class="col-sm border border-warning text-center font-weight-bold">
+			   {{ networks6_by_cat_message }}
+			</div>
+		  </div>
+		  <div class="row">
+			<div class="col-sm border border-warning">
+				<div class="container-fluid">
+				  <div class="row">
+					<div class="col-sm border border-warning">
+                      {{ CAT_NET6_TABLE }}
+					</div>
+				  <div class="row">
+					<div class="col-sm border border-warning">
+					  <canvas id="ChartCatNet6" style="border:1px solid #000000;"></canvas> 
+					</div>
+				  </div>
+				</div>
+		  </div>
+		</div>
+	</div>
+  </div>
+
+
+  <div class="row">
+    <div class="col-sm border border-warning text-center font-weight-bold">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-sm border border-warning text-center font-weight-bold">
+               {{ networks4_by_site_message }}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm border border-warning">
+                <div class="container-fluid">
+                  <div class="row">
+                    <div class="col-sm border border-warning">
+                      {{ SITE_NET4_TABLE }}
+                    </div>
+                  <div class="row">
+                    <div class="col-sm border border-warning">
+					  <canvas id="ChartSiteNet4" style="border:1px solid #000000;"></canvas> 
+                    </div>
+                  </div>
+                </div>
+          </div>
+        </div>
+    </div>
+    <div class="col-sm border border-warning text-center font-weight-bold">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-sm border border-warning text-center font-weight-bold">
+               {{ networks6_by_site_message }}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm border border-warning">
+                <div class="container-fluid">
+                  <div class="row">
+                    <div class="col-sm border border-warning">
+                      {{ SITE_NET6_TABLE }}
+                    </div>
+                  <div class="row">
+                    <div class="col-sm border border-warning">
+					  <canvas id="ChartSiteNet6" style="border:1px solid #000000;"></canvas> 
+                    </div>
+                  </div>
+                </div>
+          </div>
+        </div>
+    </div>
+  </div>
+
+
+  <div class="row">
+    <div class="col-sm border border-warning text-center font-weight-bold pt-5">
+	  <h3>HOSTS</h3>
+	</div>
+  </div>
+
+
+  <div class="row">
+    <div class="col-sm border border-warning text-center font-weight-bold">
+		<div class="container-fluid">
+		  <div class="row">
+			<div class="col-sm border border-warning text-center font-weight-bold">
+			   {{ hosts4_by_cat_message }}
+			</div>
+		  </div>
+		  <div class="row">
+			<div class="col-sm border border-warning">
+				<div class="container-fluid">
+				  <div class="row">
+					<div class="col-sm border border-warning">
+                      {{ CAT_HOST4_TABLE }}
+					</div>
+				  <div class="row">
+					<div class="col-sm border border-warning">
+					  <canvas id="ChartCatHost4" style="border:1px solid #000000;"></canvas> 
+					</div>
+				  </div>
+				</div>
+		  </div>
+		</div>
+	</div>
+    <div class="col-sm border border-warning text-center font-weight-bold">
+		<div class="container-fluid">
+		  <div class="row">
+			<div class="col-sm border border-warning text-center font-weight-bold">
+			   {{ hosts6_by_cat_message }}
+			</div>
+		  </div>
+		  <div class="row">
+			<div class="col-sm border border-warning">
+				<div class="container-fluid">
+				  <div class="row">
+					<div class="col-sm border border-warning">
+                      {{ CAT_HOST6_TABLE }}
+					</div>
+				  <div class="row">
+					<div class="col-sm border border-warning">
+					  <canvas id="ChartCatHost6" style="border:1px solid #000000;"></canvas> 
+					</div>
+				  </div>
+				</div>
+		  </div>
+		</div>
+	</div>
+  </div>
+
+
+  <div class="row">
+    <div class="col-sm border border-warning text-center font-weight-bold">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-sm border border-warning text-center font-weight-bold">
+               {{ hosts4_by_site_message }}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm border border-warning">
+                <div class="container-fluid">
+                  <div class="row">
+                    <div class="col-sm border border-warning">
+                      {{ SITE_HOST4_TABLE }}
+                    </div>
+                  <div class="row">
+                    <div class="col-sm border border-warning">
+					  <canvas id="ChartSiteHost4" style="border:1px solid #000000;"></canvas> 
+                    </div>
+                  </div>
+                </div>
+          </div>
+        </div>
+    </div>
+    <div class="col-sm border border-warning text-center font-weight-bold">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-sm border border-warning text-center font-weight-bold">
+               {{ hosts6_by_site_message }}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm border border-warning">
+                <div class="container-fluid">
+                  <div class="row">
+                    <div class="col-sm border border-warning">
+                      {{ SITE_HOST6_TABLE }}
+                    </div>
+                  <div class="row">
+                    <div class="col-sm border border-warning">
+					  <canvas id="ChartSiteHost6" style="border:1px solid #000000;"></canvas> 
+                    </div>
+                  </div>
+                </div>
+          </div>
+        </div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+var pieChart;
+var ctx = document.getElementById('{{ CANVAS_ID}}').getContext('2d');
+pieChart = new Chart(ctx, {
+    type: 'pie',
+    {{ DATA_CAT_NET4 }},
+    options: {
+    }
+});
+
+</script>
+

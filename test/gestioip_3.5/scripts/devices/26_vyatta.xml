@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='UTF-8'?> 
+
+<!-- Commands for devices running Vyatta -->
+
+<deviceGroupValues>
+
+    <deviceGroupName>Vyatta</deviceGroupName>
+    <deviceGroupID>26</deviceGroupID>
+
+    <models>Vyatta</models>
+
+    <loginPrompt>$</loginPrompt>
+    <enablePrompt>#</enablePrompt>
+    <enableCommand>configure</enableCommand>
+    <usernameExpr>[[GENERIC_USERNAME_EXPR]]</usernameExpr>
+    <passwordExpr>[[GENERIC_PASSWORD_EXPR]]</passwordExpr>
+    <logoutCommand>exit</logoutCommand>
+
+    <jobs>
+        <backupFileToTFTP>
+            <comment>Backup file (TFTP)</comment>
+            <jobType>copy_file</jobType>
+            <destConfigName>config.boot</destConfigName>
+
+            <command>save tftp://[[SERVER_IP]]/[[DEST_CONFIG_NAME]]</command>
+            <return>100.0%</return>
+        </backupFileToTFTP>
+
+
+        <backupFileToFTP>
+            <comment>Backup file (FTP)</comment>
+            <jobType>copy_file</jobType>
+
+            <destConfigName>config.boot</destConfigName>
+            <command>save ftp://[[SERVER_USERNAME]]:[[SERVER_PASSWORD]]@[[SERVER_IP]]/[[SERVER_ROOT]]/[[DEST_CONFIG_NAME]]</command>
+            <return>[[ENABLE_PROMPT]]</return>
+        </backupFileToFTP>
+
+
+        <backupFileToSCP>
+            <comment>Backup file (SCP)</comment>
+            <jobType>copy_file</jobType>
+            <destConfigName>config.boot</destConfigName>
+
+            <command>save scp://[[SERVER_USERNAME]]:[[SERVER_PASSWORD]]@[[SERVER_IP]]/[[SERVER_ROOT]]/[[DEST_CONFIG_NAME]]</command>
+            <return>[[ENABLE_PROMPT]]</return>
+        </backupFileToSCP>
+    </jobs>
+
+</deviceGroupValues>

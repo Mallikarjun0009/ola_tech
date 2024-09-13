@@ -1,0 +1,8 @@
+# Configuration file of gip_check_hosts.pl
+# GestioIP
+
+# enter here the networks which should be checked
+
+# Examples
+#192.168.0.0/24
+#192.168.2.0/26

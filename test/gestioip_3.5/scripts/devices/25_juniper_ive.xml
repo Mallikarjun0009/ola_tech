@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='UTF-8'?> 
+
+<!-- Commands for devices running Juniper ScreenOS -->
+
+<deviceGroupValues>
+
+    <deviceGroupName>Juniper IVE</deviceGroupName>
+    <deviceGroupID>25</deviceGroupID>
+
+    <models>Juniper IVE</models>
+
+<!--
+    DUMMY VALUES. IVE DO NOT SUPPORT ACCESS WITH SSH OR TELNET
+-->
+    <enablePrompt>NO_PROMPT</enablePrompt>
+    <logoutCommand>NO_COMMMAND</logoutCommand>
+
+    <jobs>
+        <saveLocalConfig>
+            <!-- This job don't connects to the device. It only copies the already saved 
+            configuration locally to the backup directory and updates the "last backup date".
+            This job requiers that the IVE already copies the configuration to the backup server.
+            (here to /tmp/juniver_ive_backup.conf)
+            (IVE GUI: Maintenance -> Archiving -> Archiving Server)
+            -->
+
+	    <comment>Copy local configuration to backup directory</comment>
+            <jobType>copy_local</jobType>
+
+            <localSourceFile>/tmp/juniver_ive_backup.conf</localSourceFile>
+        </saveLocalConfig>
+    </jobs>
+
+</deviceGroupValues>

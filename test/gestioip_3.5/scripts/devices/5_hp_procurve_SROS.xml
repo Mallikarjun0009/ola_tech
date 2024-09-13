@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='UTF-8'?> 
+
+<!-- Commands for HP devices running SROS -->
+
+<deviceGroupValues>
+
+    <deviceGroupName>SROS - ProCurve/ProVision</deviceGroupName>
+    <models>HP ProCurve Secure Router</models>
+    <deviceGroupID>5</deviceGroupID>
+
+    <models>Secure Router 7102dl/7203dl</models>
+
+    <loginPrompt>></loginPrompt>
+    <enablePrompt>#|(enable)</enablePrompt>
+    <enableCommand>enable</enableCommand>
+    <usernameExpr>[[GENERIC_USERNAME_EXPR]]</usernameExpr>
+    <passwordExpr>[[GENERIC_PASSWORD_EXPR]]</passwordExpr>
+    <logoutCommand>exit</logoutCommand>
+    <pagerDisableCmd>terminal length 0</pagerDisableCmd>
+
+    <jobs>
+        <copyRunTftp>
+            <comment>Backup running config via TFTP</comment>
+            <jobType>copy_file</jobType>
+
+            <command>copy running-config tftp</command>
+            <return>Address of remote host</return>
+            <command>[[SERVER_IP]]</command>
+            <return>Destination filename</return>
+            <command>[[CONFIG_NAME]]</command>
+            <return>Transfer Complete</return>
+        </copyRunTftp>
+    </jobs>
+
+</deviceGroupValues>

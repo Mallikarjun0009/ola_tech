@@ -1,0 +1,44 @@
+    <html>
+        <head>
+            <title>Logout page</title>
+
+			<script type="text/javascript">
+
+//        function preventBack() { window.history.forward(); }
+//window.location.replace('..');
+//        setTimeout("preventBack()", 0);
+//        window.onunload = function () { null };
+
+				var seconds = 3;
+				var url="..";
+
+				function redirect(){
+				 if (seconds <= 0){
+				 // redirect to new url after counter  down.
+				  window.location = url;
+				 }else{
+				  seconds--;
+				  document.getElementById("pageInfo").innerHTML = "redirect in "+seconds+" seconds to the <a href=\"..\">login page</a>."
+				  setTimeout("redirect()", 1000)
+				 }
+				}
+			</script>
+        </head>
+        <body>
+            <center>
+                <p></p>
+                <br>
+                <p></p>
+                <br>
+                <h2>You have signed out from Gesti&oacute;IP</h2>
+                <p></p>
+                <p></p>
+<div id="pageInfo">
+<script>
+ redirect();
+</script>
+
+</div>
+            </center>
+        </body>
+    </html>

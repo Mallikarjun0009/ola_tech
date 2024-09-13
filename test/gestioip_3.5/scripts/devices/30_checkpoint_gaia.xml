@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='UTF-8'?> 
+
+<!-- Commands for devices running Checkpoint Gaia -->
+
+<deviceGroupValues>
+
+    <deviceGroupName>Checkpoint Gaia</deviceGroupName>
+    <deviceGroupID>30</deviceGroupID>
+
+    <models>Gaia</models>
+
+    <loginPrompt></loginPrompt>
+    <enablePrompt>></enablePrompt>
+    <usernameExpr>[[GENERIC_USERNAME_EXPR]]</usernameExpr>
+    <passwordExpr>[[GENERIC_PASSWORD_EXPR]]</passwordExpr>
+    <logoutCommand>exit</logoutCommand>
+    <unsavedChangesMessage></unsavedChangesMessage>
+    <showHostnameCommand>show hostname</showHostnameCommand>
+
+    <jobs>
+        <backupConfScp>
+            <comment>Backup config via SCP</comment>
+            <jobType>copy_file</jobType>
+            <commandTimeout>180</commandTimeout>
+            <dateFormat>%D_%b_%Y_%H</dateFormat>
+            <configExtension>tgz</configExtension>
+            <destConfigName>backup_[[HOSTNAME]]_[[DATE]]_*.tgz</destConfigName>
+
+
+            <command>add backup scp ip [[SERVER_IP]] path [[SERVER_ROOT]] username [[SERVER_USERNAME]] password [[SERVER_PASSWORD]][[SLEEP360]]</command>
+            <return>[[ENABLE_PROMPT]]</return>
+            <command>show backup status</command>
+            <return>backup succeeded</return>
+        </backupConfScp>
+
+    </jobs>
+
+</deviceGroupValues>

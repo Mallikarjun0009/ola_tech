@@ -1,0 +1,60 @@
+
+
+Sun Nov  1 15:24:19 2020
+Command line: TestDisk
+
+TestDisk 7.0, Data Recovery Utility, April 2015
+Christophe GRENIER <grenier@cgsecurity.org>
+http://www.cgsecurity.org
+OS: Linux, kernel 4.4.0-57-generic (#78-Ubuntu SMP Fri Dec 9 23:50:32 UTC 2016) x86_64
+Compiler: GCC 5.3
+ext2fs lib: 1.42.13, ntfs lib: libntfs-3g, reiserfs lib: none, ewf lib: none, curses lib: ncurses 6.0
+/dev/sda: LBA, HPA, LBA48, DCO support
+/dev/sda: size       500118192 sectors
+/dev/sda: user_max   500118192 sectors
+/dev/sda: native_max 500118192 sectors
+/dev/sda: dco        500118192 sectors
+/dev/sdb: LBA, HPA, LBA48, DCO support
+/dev/sdb: size       3907029168 sectors
+/dev/sdb: user_max   3907029168 sectors
+/dev/sdb: native_max 3907029168 sectors
+/dev/sdb: dco        3907029168 sectors
+Warning: can't get size for Disk /dev/mapper/control - 0 B - 0 sectors, sector size=512
+Hard disk list
+Disk /dev/sda - 256 GB / 238 GiB - CHS 31130 255 63, sector size=512 - HFS256G39TND-N210A, S/N:FJ6BN05031MB1B845, FW:30001P10
+Disk /dev/sdb - 2000 GB / 1863 GiB - CHS 243201 255 63, sector size=512 - ST2000LM003 HN-M201RAD, S/N:S356J9GG102369, FW:2BC10001
+Disk /dev/sdc - 8019 MB / 7648 MiB - CHS 1022 247 62, sector size=512 - hp v220w, FW:1100
+
+Partition table type (auto): EFI GPT
+Disk /dev/sda - 256 GB / 238 GiB - HFS256G39TND-N210A
+Partition table type: Intel
+
+Interface Advanced
+Geometry from i386 MBR: head=255 sector=63
+BAD_RS LBA=1 0
+check_part_i386 1 type EE: no test
+ 1 P EFI GPT                  0   0  2 31130 233 63  500118191
+Partition table type (auto): EFI GPT
+Disk /dev/sda - 256 GB / 238 GiB - HFS256G39TND-N210A
+Partition table type: EFI GPT
+
+Interface Advanced
+hdr_size=92
+hdr_lba_self=1
+hdr_lba_alt=500118191 (expected 500118191)
+hdr_lba_start=34
+hdr_lba_end=500118158
+hdr_lba_table=2
+hdr_entries=128
+hdr_entsz=128
+check_part_gpt failed for partition
+ 3 P MS Reserved              1435648    1697791     262144 [Microsoft reserved partition]
+ 1 P Unknown                     2048    1230847    1228800
+ 2 P EFI System               1230848    1435647     204800 [EFI system partition]
+ 3 P MS Reserved              1435648    1697791     262144 [Microsoft reserved partition]
+ 4 P MS Data                  1697792  304035839  302338048 [Basic data partition]
+     NTFS, blocksize=4096, 154 GB / 144 GiB
+ 5 P Unknown                304035840  304535551     499712
+ 6 P Linux Swap             304535552  335785983   31250432
+ 7 P Unknown                335785984  500117503  164331520
+SIGINT detected! TestDisk has been killed.

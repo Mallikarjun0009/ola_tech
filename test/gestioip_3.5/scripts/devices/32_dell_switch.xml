@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='UTF-8'?> 
+
+<!-- Commands for DELL switches -->
+
+<deviceGroupValues>
+
+    <deviceGroupName>Dell PowerConnect 33xx, N series</deviceGroupName>
+    <deviceGroupID>32</deviceGroupID>
+
+    <models>PowerConnect and N series switches</models>
+
+    <loginPrompt>></loginPrompt>
+    <enablePrompt>#</enablePrompt>
+    <enableCommand>enable</enableCommand>
+    <usernameExpr>[[GENERIC_USERNAME_EXPR]]</usernameExpr>
+    <passwordExpr>[[GENERIC_PASSWORD_EXPR]]</passwordExpr>
+    <logoutCommand>logout</logoutCommand>
+    <pagerExpr>--More--</pagerExpr>
+    <pagerDisableCmd>terminal length 0</pagerDisableCmd>
+    <unsavedChangesMessage>The system has unsaved changes|Would you like to save them now|(Profile.Configuration) changes have occurred|Do you wish to save your configuration changes</unsavedChangesMessage>
+
+    <jobs>
+        <copyRunTftp>
+            <comment>Backup running config via TFTP</comment>
+            <jobType>copy_file</jobType>
+            <diffConfigIgnore>Last Configuration change at</diffConfigIgnore>
+
+            <command>copy running-config tftp://[[SERVER_IP]]/[[CONFIG_NAME]]</command>
+            <return>Are you sure you want to start</return>
+            <command>y</command>
+            <return>completed successfully.</return>
+        </copyRunTftp>
+
+        <copyTftpRun>
+            <comment>Restore running config from TFTP</comment>
+            <jobType>task</jobType>
+            <diffConfigIgnore>Last Configuration change at</diffConfigIgnore>
+
+            <command>copy tftp://[[SERVER_IP]]/[[UPLOAD_CONFIG_NAME]] running-config</command>
+            <return>Are you sure you want to start? (y/n)</return>
+            <command>y</command>
+            <return>bytes transferred</return>
+        </copyTftpRun>
+
+        <copyRunScp>
+            <comment>Backup running config via SCP</comment>
+            <jobType>copy_file</jobType>
+            <diffConfigIgnore>Last Configuration change at</diffConfigIgnore>
+
+            <command>copy running-configuration scp://[[SERVER_USERNAME]]@[[SERVER_IP]]/[[SERVER_ROOT]]/[[CONFIG_NAME]]</command>
+            <return>[[GENERIC_PASSWORD_EXPR]]</return>
+            <command>[[SERVER_PASSWORD]]</command>
+            <return>Copy succeeded</return>
+        </copyRunScp>
+    </jobs>
+
+</deviceGroupValues>

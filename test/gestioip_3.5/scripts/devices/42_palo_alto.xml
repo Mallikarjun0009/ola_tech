@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='UTF-8'?> 
+
+<!-- Commands for paloalto devices -->
+
+<deviceGroupValues>
+
+    <deviceGroupName>Paloalto</deviceGroupName>
+    <deviceGroupID>42</deviceGroupID>
+
+    <models>5000 family</models>
+
+    <loginPrompt></loginPrompt>
+    <enablePrompt>></enablePrompt>
+    <enableCommand></enableCommand>
+    <usernameExpr>[[GENERIC_USERNAME_EXPR]]</usernameExpr>
+    <passwordExpr>[[GENERIC_PASSWORD_EXPR]]</passwordExpr>
+    <logoutCommand>exit</logoutCommand>
+    <pagerDisableCmd>set cli pager off</pagerDisableCmd>
+    <unsavedChangesMessage>The system has unsaved changes|Would you like to save them now|(Profile.Configuration) changes have occurred|Do you wish to save your configuration changes</unsavedChangesMessage>
+
+    <jobs>
+        <copyRunTftp>
+            <comment>Backup running config via TFTP</comment>
+            <jobType>copy_file</jobType>
+            <destConfigName>running-config.xml</destConfigName>
+
+            <command>tftp export configuration from [[DEST_CONFIG_NAME]] to [[SERVER_IP]]</command>
+            <return>Sent.*bytes in.*seconds.*</return>
+        </copyRunTftp>
+
+        <copyRunSCP>
+            <comment>Backup running config via SCP</comment>
+            <jobType>copy_file</jobType>
+
+            <command>scp export configuration from running-config.xml to [[SERVER_USERNAME]]@[[SERVER_IP]]/[[CONFIG_NAME]]</command>
+            <return>[[GENERIC_PASSWORD_EXPR]]</return>
+            <command>[[SERVER_PASSWORD]]</command>
+            <return>100%.*</return>
+        </copyRunSCP>
+    </jobs>
+
+</deviceGroupValues>

@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='UTF-8'?> 
+
+<deviceGroupValues>
+
+    <deviceGroupName>Netonix</deviceGroupName>
+    <deviceGroupID>50</deviceGroupID>
+
+    <models>Netonix</models>
+
+    <enablePrompt>#</enablePrompt>
+    <usernameExpr>[[GENERIC_USERNAME_EXPR]]</usernameExpr>
+    <passwordExpr>[[GENERIC_PASSWORD_EXPR]]</passwordExpr>
+    <logoutCommand>exit</logoutCommand>
+
+    <jobs>
+        <backupFileToTFTP>
+            <comment>Backup file (TFTP)</comment>
+            <jobType>copy_file</jobType>
+
+            <command>copy startup-config tftp://[[SERVER_IP]]/[[CONFIG_NAME]]</command>
+            <return>[[ENABLE_PROMPT]]</return>
+        </backupFileToTFTP>
+    </jobs>
+
+</deviceGroupValues>

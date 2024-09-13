@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='UTF-8'?> 
+
+<!-- Commands for devices Pacific Broadband Networks (PBM) devices -->
+
+<deviceGroupValues>
+
+    <deviceGroupName>PBN</deviceGroupName>
+    <deviceGroupID>29</deviceGroupID>
+
+    <models>AOCM3000-6000</models>
+
+    <loginPrompt>></loginPrompt>
+    <enablePrompt>#</enablePrompt>
+    <enableCommand>enable</enableCommand>
+    <usernameExpr>[[GENERIC_USERNAME_EXPR]]</usernameExpr>
+    <passwordExpr>[[GENERIC_PASSWORD_EXPR]]</passwordExpr>
+    <logoutCommand>exit</logoutCommand>
+
+    <jobs>
+        <copyStartupFtp>
+            <comment>Backup startup-config via FTP</comment>
+            <jobType>copy_file</jobType>
+
+            <command>write</command>
+            <return>OK!</return>
+            <command>copy startup-config ftp [[SERVER_IP]]</command>
+            <return>ftp user name</return>
+            <command>[[SERVER_USERNAME]]</command>
+            <return>ftp user password</return>
+            <command>[[SERVER_PASSWORD]]</command>
+            <return>Destination file name</return>
+            <command>[[CONFIG_NAME]]</command>
+            <return>FTP:successfully send</return>
+        </copyStartupFtp>
+
+        <copyFtpStartup>
+            <comment>Restore startup-config from FTP</comment>
+            <jobType>task</jobType>
+
+            <command>copy ftp://[[SERVER_USERNAME]]:[[SERVER_PASSWORD]]@[[SERVER_IP]]/[[UPLOAD_CONFIG_NAME]] flash:startup-config</command>
+            <return>FTP: successfully received</return>
+        </copyFtpStartup>
+    </jobs>
+
+</deviceGroupValues>

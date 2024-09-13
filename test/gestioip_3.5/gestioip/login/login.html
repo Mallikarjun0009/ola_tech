@@ -1,0 +1,87 @@
+    <html>
+        <head>
+			<title>Gesti&oacute;IP Login Page</title>
+			<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+
+			<link rel="stylesheet" href="/gestioip/css/bootstrap/bootstrap.min.css">
+			<link rel="stylesheet" href="/gestioip/css/font-awesome/css/all.min.css" >
+			<link rel="stylesheet" href="/gestioip/css/bootstrap_overwrite.css">
+
+			<style>
+				div#AllBox { padding-left: 0.5em; padding-right: 0.5em; font-family: Helvetica Neue, Helvetica, Arial, sans-serif; color: #29396B;}
+//				div#TopBox { background-color: #A0ACC6; width:400px; height: 220px; margin: auto; text-align: center; margin-top: 20px; margin-bottom: 20px; border: 2px solid #444a58; border-radius: 25px; color: white;} 
+//				div#TopBox { width:400px; height: 230px; margin: auto; text-align: center; margin-top: 1px; margin-bottom: 20px; border: 2px solid #444a58; } 
+				div#TopBox { width:400px; height: 230px; margin: auto; text-align: center; margin-top: 1px; margin-bottom: 20px; } 
+				div#Center { text-align: center; }
+				.TopTextGip { font-size: 55px; margin: 0; padding: 0.1em; text-align: center; font-weight: bold; color: #154360; text-shadow: 3px 3px 2px lightgray; }
+				.TopTextLogin { font-size: 25px; margin: 0; padding: 0.1em; text-align: center; font-weight: bold; color: #154360; }
+				.LoginButton { font-size: 20px; margin: 0; padding: 0.1em; text-align: center; font-weight: bold; color: #154360; background: transparent; border: 0px; cursor:pointer; }
+				.LoginButton:hover {
+//					background-color: #3e8e41;
+					color: #3e4f85;
+				}
+
+				.LoginButton:active {
+//				  box-shadow: 0 5px #666;
+				  transform: translateY(2px);
+}
+				.lg-btn-bg {
+				  background-color: #154360;
+				  color: #d4e6f1;
+				}
+				.lg-btn-bg:hover {
+				  color: white;
+				}
+
+//				 .button {
+//				  background-color: #29396B;
+//				  border: none;
+//				  border-radius: 4px;
+//				  color: white;
+////				  padding: 10px 100px;
+//				  width: 10em;
+//				  text-align: center;
+//				  text-decoration: none;
+//				  display: inline-block;
+//				  font-size: 1.2em;
+//				  cursor: pointer;
+//				}
+			</style>
+        </head>
+
+        <body>
+		<div id="AllBox">
+        <p><br>
+		<div id="Center"><span class="TopTextGip">Gesti&oacute;IP</span></div>
+        <div id="Center"><span class="TopTextLogin">Sign In</span></div>
+		<div id="TopBox">
+        <br>
+        <p></p>
+		<form class="form-signin" method="POST" action="">
+			<div class="container">
+			  <div class="row justify-content-md-center">
+				<div class="col" align="center">
+					<input type="text" class='form-control m-2' style='width: 14em;' name="httpd_username" value="" autofocus="autofocus" placeholder="Username"/>
+				</div>
+			  </div>
+			  <div class="row justify-content-md-center">
+				<div class="col" align="center">
+					<input type="password" class='form-control m-2' style='width: 14em' name="httpd_password" value="" placeholder="Password" />
+				</div>
+			  </div>
+			  <div class="row justify-content-md-center">
+				<div class="col">
+					<input type="submit" class="btn lg-btn-bg m-2" style='width: 14em' name="login"  value="login" />
+				</div>
+			  </div>
+		    </div>
+			<input type="hidden" name="create_csrf_token" value="true" />
+		</form>
+		</div>
+		</div>
+		</div>
+		</div>
+
+
+        </body>
+    </html>

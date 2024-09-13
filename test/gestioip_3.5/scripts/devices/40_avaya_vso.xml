@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8'?> 
+
+<!-- Commands for Avaya devices running VSP Operating System Software -->
+
+<deviceGroupValues>
+
+    <deviceGroupName>Avaya VSO</deviceGroupName>
+    <deviceGroupID>40</deviceGroupID>
+
+    <models>VSP-4450GSX</models>
+
+    <loginPrompt>></loginPrompt>
+    <enablePrompt>#|(enable)</enablePrompt>
+    <enableCommand>enable</enableCommand>
+    <usernameExpr>[[GENERIC_USERNAME_EXPR]]</usernameExpr>
+    <passwordExpr>[[GENERIC_PASSWORD_EXPR]]</passwordExpr>
+    <logoutCommand>exit</logoutCommand>
+    <pagerExpr>--More--</pagerExpr>
+    <pagerDisableCmd>terminal length 0</pagerDisableCmd>
+    <unsavedChangesMessage>The system has unsaved changes|Would you like to save them now|(Profile.Configuration) changes have occurred|Do you wish to save your configuration changes</unsavedChangesMessage>
+
+    <jobs>
+        <copyRunTftp>
+            <comment>Backup running config via TFTP</comment>
+            <jobType>copy_file</jobType>
+
+            <command>copy /intflash/config.cfg [[SERVER_IP]]:/[[CONFIG_NAME]]</command>
+            <return>[[ENABLE_PROMPT]]</return>
+        </copyRunTftp>
+    </jobs>
+
+</deviceGroupValues>

@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='UTF-8'?> 
+
+<!-- Commands for Avaya Ethernet Routing Switches -->
+
+<deviceGroupValues>
+
+    <deviceGroupName>Avaya ERS</deviceGroupName>
+    <deviceGroupID>41</deviceGroupID>
+
+    <models>4826GTS</models>
+
+    <loginPrompt>Ethernet Routing Switch.*\r*\n*</loginPrompt>
+    <enablePrompt>#</enablePrompt>
+    <enableCommand></enableCommand>
+    <usernameExpr>[[GENERIC_USERNAME_EXPR]]</usernameExpr>
+    <passwordExpr>[[GENERIC_PASSWORD_EXPR]]</passwordExpr>
+    <logoutCommand>exit</logoutCommand>
+
+    <jobs>
+        <copyRunTftp>
+            <comment>Backup running config via TFTP</comment>
+            <jobType>copy_file</jobType>
+
+            <command>copy running-config tftp address [[SERVER_IP]] filename [[CONFIG_NAME]]</command>
+            <return>configuration generation completed</return>
+        </copyRunTftp>
+
+        <copyBinConfTftp>
+            <comment>Backup binary config via TFTP</comment>
+            <jobType>copy_file</jobType>
+
+            <command>copy config tftp address [[SERVER_IP]] filename [[CONFIG_NAME]]</command>
+            <return>Configuration file successfully written</return>
+        </copyBinConfTftp>
+    </jobs>
+
+</deviceGroupValues>

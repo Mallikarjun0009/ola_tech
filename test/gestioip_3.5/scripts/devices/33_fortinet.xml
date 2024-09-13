@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8'?> 
+
+<!-- Commands for Fortinet devices -->
+
+<deviceGroupValues>
+
+    <deviceGroupName>Fortinet</deviceGroupName>
+    <deviceGroupID>33</deviceGroupID>
+
+    <models></models>
+
+    <enablePrompt>#</enablePrompt>
+    <usernameExpr>[[GENERIC_USERNAME_EXPR]]</usernameExpr>
+    <passwordExpr>[[GENERIC_PASSWORD_EXPR]]</passwordExpr>
+    <logoutCommand>exit</logoutCommand>
+    <pagerExpr>--More--</pagerExpr>
+    <pagerDisableCmd>terminal length 0</pagerDisableCmd>
+    <unsavedChangesMessage>The system has unsaved changes|Would you like to save them now|(Profile.Configuration) changes have occurred|Do you wish to save your configuration changes</unsavedChangesMessage>
+
+    <jobs>
+        <copyRunTftp>
+            <comment>Backup full-config config via TFTP</comment>
+            <jobType>copy_file</jobType>
+
+            <command>exec backup full-config [[CONFIG_NAME]] tftp [[SERVER_IP]]</command>
+            <return>#</return>
+        </copyRunTftp>
+    </jobs>
+
+</deviceGroupValues>

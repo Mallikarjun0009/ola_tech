@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8'?> 
+
+<!-- Commands for devices 3Comm Comware -->
+
+<deviceGroupValues>
+
+    <deviceGroupName>3Comm Comware</deviceGroupName>
+    <deviceGroupID>47</deviceGroupID>
+
+    <models>4500</models>
+
+    <loginPrompt></loginPrompt>
+    <enablePrompt>></enablePrompt>
+    <enableCommand></enableCommand>
+    <usernameExpr>[[GENERIC_USERNAME_EXPR]]</usernameExpr>
+    <passwordExpr>[[GENERIC_PASSWORD_EXPR]]</passwordExpr>
+    <logoutCommand>quit</logoutCommand>
+    <pagerExpr></pagerExpr>
+
+    <jobs>
+        <bckCurrentConfigTFTP>
+            <comment>Backup current configuration via TFTP</comment>
+            <jobType>copy_file</jobType>
+            
+            <command>backup unit 1 current-configuration to [[SERVER_IP]] [[CONFIG_NAME]]</command>
+            <return>finished</return>
+        </bckCurrentConfigTFTP>
+    </jobs>
+
+</deviceGroupValues>

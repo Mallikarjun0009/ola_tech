@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8'?> 
+
+<!-- Commands for IBM Virtual Fabric devices -->
+
+<deviceGroupValues>
+
+    <deviceGroupName>IBM Virtual Fabric 10Gb Switch Module for IBM BladeCente</deviceGroupName>
+    <deviceGroupID>15</deviceGroupID>
+
+    <models>Virtual Fabric 10Gb Switch Module for IBM BladeCente</models>
+
+    <loginPrompt></loginPrompt>
+    <enablePrompt>Main#</enablePrompt>
+    <usernameExpr>[[GENERIC_USERNAME_EXPR]]</usernameExpr>
+    <passwordExpr>[[GENERIC_PASSWORD_EXPR]]</passwordExpr>
+    <logoutCommand>exit</logoutCommand>
+    <pagerExpr></pagerExpr>
+    <pagerDisableCmd></pagerDisableCmd>
+    <unsavedChangesMessage></unsavedChangesMessage>
+
+    <jobs>
+        <copyRunTftp>
+            <comment>Backup running config via TFTP</comment>
+            <jobType>copy_file</jobType>
+
+            <command>cfg</command>
+            <return>Configuration#</return>
+            <command>ptcfg</command>
+            <return>Enter hostname or IP address of FTP/TFTP server:</return>
+            <command>[[SERVER_IP]]</command>
+            <return>Enter name of file on FTP/TFTP server</return>
+            <command>[[CONFIG_NAME]]</command>
+            <return>Enter username for FTP server or hit return for TFTP server</return>
+            <command></command>
+            <return>Configuration#</return>
+        </copyRunTftp>
+
+    </jobs>
+
+</deviceGroupValues>

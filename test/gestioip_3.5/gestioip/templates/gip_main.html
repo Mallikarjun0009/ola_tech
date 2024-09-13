@@ -1,0 +1,115 @@
+<html>
+<head>
+	<title>{{ TITLE }}</title>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<link rel="stylesheet" href="{{ SERVER_PROTO }}://{{ BASE_URI }}/css/bootstrap/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="{{ SERVER_PROTO }}://{{ BASE_URI }}/stylesheet.css">
+	<link rel="stylesheet" href="{{ SERVER_PROTO }}://{{ BASE_URI }}/css/jstree/style.min.css" >
+	<link rel="stylesheet" href="{{ SERVER_PROTO }}://{{ BASE_URI }}/css/font-awesome/css/all.min.css" >
+
+	<link rel="stylesheet" href="{{ SERVER_PROTO }}://{{ BASE_URI }}/css/bootstrap_overwrite.css">
+
+	<script src="{{ SERVER_PROTO }}://{{ BASE_URI }}/js/charts/Chart.bundle.min.js"></script>
+	<script src="{{ SERVER_PROTO }}://{{ BASE_URI }}/js/jquery/jquery-3.3.1.min.js"></script>
+    <script src="{{ SERVER_PROTO }}://{{ BASE_URI }}/js/popper/popper.min.js"></script>
+	<script src="{{ SERVER_PROTO }}://{{ BASE_URI }}/js/bootstrap/bootstrap.min.js"></script>
+	<script src="{{ SERVER_PROTO }}://{{ BASE_URI }}/js/jstree/jstree.min.js"></script>
+    {{ NETBLOCK_LIST_VIEW_TREE }}
+	<script src="{{ SERVER_PROTO }}://{{ BASE_URI }}/js/gip_helper.js"></script>
+
+	<script type="text/javascript">
+    	// When the user scrolls down 20px from the top of the document, show the button
+    //	window.onscroll = function() {scrollFunction()};
+        window.onload = clear_div_notify;
+	</script>
+
+	<link rel="shortcut icon" href="{{ SERVER_PROTO }}://{{ BASE_URI }}/favicon.ico">
+
+</head>
+<body {{ BODY_ONLOAD }}>
+<p></p>
+<div class="container-fluid">
+<div class="container-fluid bg-gip text-white" style="height: 60px;">
+
+  <div class="row">
+    <div class="col-2 pt-3">
+         <div class="nowrap" style="width: 200px">
+		  <form class="form-inline"  action="{{ SERVER_PROTO }}://{{ BASE_URI }}/{{ QUICK_SEARCH_SCRIPT }}" id="quick_search" name="quick_search">
+          <input type="hidden" name="client_id" value="{{ CLIENT_ID }}">
+          <input type="hidden" name="search_index" value="true">
+			 <input class="form-control form-control-sm dropdown-toggle nowrap" style="width: 10em" type="search" placeholder="{{ QUICK_SEARCH_NAME }}" aria-label="networks" id="match" name="match">
+			 <div class="dropdown nowrap">
+			  <div class="btn btn-gip btn-sm white nowrap p-1" style="height: 2em; width: 1.5em;" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <span id="searchButtonIcon" class="fa fa-caret-down white"></span>
+              </div>
+			  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+				{{ SEARCH_DROPDOWN }}
+			  </div>
+		  </div>
+		</form>
+		  </div>
+<script>
+function changePlaceholder(PH,SCRIPT) {
+	document.getElementById("match").placeholder=PH;
+	document.quick_search.match.focus();
+	document.quick_search.action="{{ SERVER_PROTO }}://{{ BASE_URI }}/" + SCRIPT
+    setCookie("quickSearch", PH, 365);
+}
+</script>
+
+     </div>
+
+    <div class="col-6">
+		<nav class="navbar navbar-expand-lg navbar-custom pt-1 bg-gip">
+		  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		  </button>
+
+		  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav">
+				{{ NAV_LIST }}
+			</ul>
+		  </div>
+		</nav>
+    </div>
+
+    <div class="col-lg-1 p-2">
+      <div class="form-group" id="client_id_form">
+      {{ CLIENT_SELECT }}
+      </div>
+    </div>
+
+    <div class="col-2">
+      <a href="https://www.gestioip.net" target="_blank" title="www.gestioip.net"><h3 class="pt-3 text-right pr-4 text-white">Gesti&oacute;IP</h3></a>
+    </div>
+    <div class="col-1">
+        <span class="align-middle">
+        <div class="d-flex p-1 pt-2 align-middle">
+            {{ CUSTOM_LOGO }}
+        </div>
+        </span>
+    </div>
+
+  </div>
+</div>
+
+<div class="container-fluid">
+  <div class="row bg-headline border border-gray-bottom" style="height: 25px;">
+    <div id="rootnet_chain" class="col-3">
+	</div>
+
+    <div class="col-4" style="padding-top: 2px; color: #696969;">
+        {{ NAV_TEXT }}
+    </div>
+    <div class="col-4" style="padding-top: 2px; color: #696969;">
+        {{ NAV_OPTIONS }}
+    </div>
+  </div>
+</div>
+
+<div class="wrapper">
+    <!-- Sidebar -->
+		{{ SITEBAR }}

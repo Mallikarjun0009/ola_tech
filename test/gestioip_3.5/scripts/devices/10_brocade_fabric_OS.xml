@@ -1,0 +1,83 @@
+<?xml version='1.0' encoding='UTF-8'?> 
+
+<!-- Commands for devices running Brocade Fabric OS -->
+
+<deviceGroupValues>
+
+    <deviceGroupName>Brocade Fabric OS</deviceGroupName>
+    <deviceGroupID>10</deviceGroupID>
+
+    <models>DS4100</models>
+
+    <loginPrompt>NO_PROMPT</loginPrompt>
+    <enablePrompt>></enablePrompt>
+    <enableCommand>enable</enableCommand>
+    <usernameExpr>[[GENERIC_USERNAME_EXPR]]</usernameExpr>
+    <passwordExpr>[[GENERIC_PASSWORD_EXPR]]</passwordExpr>
+    <logoutCommand>exit</logoutCommand>
+    <pagerExpr></pagerExpr>
+
+    <jobs>
+        <copyRunFtp>
+	    <comment>Backup running config via FTP v7</comment>
+            <jobType>copy_file</jobType>
+
+            <command>configupload</command>
+            <return>Protocol</return>
+            <command>ftp</command>
+            <return>Server Name or IP Address</return>
+            <command>[[SERVER_IP]]</command>
+            <return>User Name</return>
+            <command>[[SERVER_USERNAME]]</command>
+            <return>File Name|Filename</return>
+            <command>[[CONFIG_NAME]]</command>
+            <return>Section</return>
+            <command>all</command>
+            <return>Password</return>
+            <command>[[SERVER_PASSWORD]]</command>
+
+            <return>configUpload complete</return>
+        </copyRunFtp>
+
+        <copyRunFtp5.2>
+	    <comment>Backup running config via FTP v5</comment>
+            <jobType>copy_file</jobType>
+
+            <command>configupload</command>
+            <return>Protocol</return>
+            <command>ftp</command>
+            <return>Server Name or IP Address</return>
+            <command>[[SERVER_IP]]</command>
+            <return>User Name</return>
+            <command>[[SERVER_USERNAME]]</command>
+            <return>File Name|Filename</return>
+            <command>[[CONFIG_NAME]]</command>
+            <return>Password</return>
+            <command>[[SERVER_PASSWORD]]</command>
+
+            <return>configUpload complete</return>
+        </copyRunFtp5.2>
+
+        <copyRunScp>
+	    <comment>Backup running config via SCP (no CRA)</comment>
+            <jobType>copy_file</jobType>
+
+            <command>configupload</command>
+            <return>Protocol</return>
+            <command>scp</command>
+            <command>Do you want to continue with CRA</command>
+            <return>N</return>
+            <return>Server Name or IP Address</return>
+            <command>[[SERVER_IP]]</command>
+            <return>User Name</return>
+            <command>[[SERVER_USERNAME]]</command>
+            <return>File Name|Filename</return>
+            <command>[[SERVER_ROOT]]/[[CONFIG_NAME]]</command>
+            <return>Password</return>
+            <command>[[SERVER_PASSWORD]]</command>
+            <return>configUpload complete</return>
+        </copyRunScp>
+
+    </jobs>
+
+</deviceGroupValues>

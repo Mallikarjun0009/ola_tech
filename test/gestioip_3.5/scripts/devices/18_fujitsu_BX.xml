@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='UTF-8'?> 
+
+<!-- Commands for devices Fujitsu-->
+
+<deviceGroupValues>
+
+    <deviceGroupName>Fujitsu BX</deviceGroupName>
+    <deviceGroupID>18</deviceGroupID>
+
+    <models>BX400/900</models>
+
+    <loginPrompt>(.*).*></loginPrompt>
+    <enablePrompt>(.*).*#</enablePrompt>
+    <enableCommand>enable</enableCommand>
+    <usernameExpr>[[GENERIC_USERNAME_EXPR]]</usernameExpr>
+    <passwordExpr>[[GENERIC_PASSWORD_EXPR]]</passwordExpr>
+    <logoutCommand>exit</logoutCommand>
+    <pagerDisableCmd>no pager</pagerDisableCmd>
+
+    <jobs>
+        <copyRunTftp>
+            <comment>Backup running config via TFTP</comment>
+            <jobType>copy_file</jobType>
+            <command>copy startup-config default.cfg tftp://[[SERVER_IP]]/[[CONFIG_NAME]]</command>
+            <return>Are you sure you want to start</return>
+            <command>y</command>
+            <return>File transfer operation completed successfully</return>
+        </copyRunTftp>
+
+        <copyRunFtp>
+            <comment>Backup running config via FTP</comment>
+            <jobType>copy_file</jobType>
+            <command>copy startup-config default.cfg  ftp://[[SERVER_USERNAME]]:[[SERVER_PASSWORD]]@[[SERVER_IP]]/[[SERVER_ROOT]]/[[CONFIG_NAME]]</command>
+            <return>Are you sure you want to start</return>
+            <command>y</command>
+            <return>File transfer operation completed successfully</return>
+        </copyRunFtp>
+
+        <getConfigCli>
+           <comment>Backup running-config via CLI</comment>
+           <jobType>fetch_command_output</jobType>
+
+            <command>show running-config</command>
+            <return>[[ENABLE_PROMPT]]</return>
+<!--            <command>exit</command> -->
+<!--            <return>(.*) ></return> -->
+        </getConfigCli>
+    </jobs>
+
+</deviceGroupValues>

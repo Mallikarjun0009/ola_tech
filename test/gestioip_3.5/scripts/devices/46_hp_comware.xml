@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='UTF-8'?> 
+
+<!-- Commands for devices HP Comware -->
+
+<deviceGroupValues>
+
+    <deviceGroupName>HP Comware</deviceGroupName>
+    <deviceGroupID>46</deviceGroupID>
+
+    <models>1910, 1920</models>
+
+    <loginPrompt></loginPrompt>
+    <enablePrompt>></enablePrompt>
+    <enableCommand></enableCommand>
+    <usernameExpr>[[GENERIC_USERNAME_EXPR]]</usernameExpr>
+    <passwordExpr>[[GENERIC_PASSWORD_EXPR]]</passwordExpr>
+    <logoutCommand>quit</logoutCommand>
+    <pagerExpr></pagerExpr>
+
+    <jobs>
+        <bckStartupConfigTFTP>
+            <comment>Backup startup-configuration via TFTP</comment>
+            <jobType>copy_file</jobType>
+
+            <command>_cmdline-mode on</command>
+            <return>Continue</return>
+            <command>Y</command>
+            <return>Please input password:</return>
+            <command>REPLACE_WITH_CMD_LINE_PASSWORD</command>
+            <return>direction</return>
+            <command>backup startup-configuration to [[SERVER_IP]] [[CONFIG_NAME]]</command>
+            <return>finished</return>
+        </bckStartupConfigTFTP>
+    </jobs>
+
+</deviceGroupValues>

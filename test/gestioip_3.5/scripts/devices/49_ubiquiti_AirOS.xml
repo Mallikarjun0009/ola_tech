@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='UTF-8'?> 
+
+<!-- Commands for devices running Ubiquiti AirOS -->
+
+<deviceGroupValues>
+
+    <deviceGroupName>Ubiquiti AirOS</deviceGroupName>
+    <deviceGroupID>49</deviceGroupID>
+
+    <models>Ubiquiti AirOS</models>
+
+    <enablePrompt>#</enablePrompt>
+    <usernameExpr>[[GENERIC_USERNAME_EXPR]]</usernameExpr>
+    <passwordExpr>[[GENERIC_PASSWORD_EXPR]]</passwordExpr>
+    <logoutCommand>exit</logoutCommand>
+
+    <jobs>
+        <backupFileToTFTP>
+            <comment>Backup file (TFTP)</comment>
+            <jobType>copy_file</jobType>
+
+            <command>tftp -p -l /tmp/system.cfg -r [[CONFIG_NAME]] [[SERVER_IP]]</command>
+            <return>[[ENABLE_PROMPT]]</return>
+        </backupFileToTFTP>
+    </jobs>
+
+</deviceGroupValues>

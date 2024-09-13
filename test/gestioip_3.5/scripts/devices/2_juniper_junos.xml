@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='UTF-8'?> 
+
+<!-- Commands for devices running Juniper JunOS -->
+
+<deviceGroupValues>
+
+    <deviceGroupName>Juniper JunOS</deviceGroupName>
+    <deviceGroupID>2</deviceGroupID>
+
+    <models></models>
+
+    <loginPrompt>@%</loginPrompt>
+    <enablePrompt>></enablePrompt>
+    <enableCommand>cli</enableCommand>
+    <usernameExpr>[[GENERIC_USERNAME_EXPR]]</usernameExpr>
+    <passwordExpr>[[GENERIC_PASSWORD_EXPR]]</passwordExpr>
+    <logoutCommand>exit</logoutCommand>
+    <pagerDisableCmd>set cli screen-length 0</pagerDisableCmd>
+
+    <jobs>
+	<comment>JunOS does not support TFTP</comment>
+
+        <copyRunFtp>
+	    <comment>Backup running config via FTP</comment>
+            <jobType>copy_file</jobType>
+
+            <command>file copy /config/juniper.conf.gz ftp://[[SERVER_USERNAME]]@[[SERVER_IP]]/[[SERVER_ROOT]]/[[CONFIG_NAME]]</command>
+            <return>[Pa]ssword</return>
+            <command>[[SERVER_PASSWORD]]</command>
+            <return>100%</return>
+        </copyRunFtp>
+
+        <showConf>
+	    <comment>backup output of command "show configuration"</comment>
+            <jobType>fetch_command_output</jobType>
+
+            <command>show configuration[[IGNORE_ERRORS,disable-timeout,events ping_test_failed,disable-on-ping-failure]]</command>
+            <return>[[ENABLE_PROMPT]]</return>
+        </showConf>
+
+    </jobs>
+
+</deviceGroupValues>

@@ -1,0 +1,94 @@
+<?xml version='1.0' encoding='UTF-8'?> 
+
+<!-- Commands for devices running Nokia IPSO -->
+
+<deviceGroupValues>
+
+    <deviceGroupName>Nokia IPSO</deviceGroupName>
+    <deviceGroupID>16</deviceGroupID>
+
+    <models>IPSO-LX</models>
+
+    <loginPrompt>></loginPrompt>
+    <enablePrompt>#</enablePrompt>
+    <enableCommand>enable</enableCommand>
+    <loginConfirmationExpr>Terminal type?</loginConfirmationExpr>
+    <usernameExpr>[[GENERIC_USERNAME_EXPR]]</usernameExpr>
+    <passwordExpr>[[GENERIC_PASSWORD_EXPR]]</passwordExpr>
+    <logoutCommand>exit</logoutCommand>
+    <pagerExpr>--More--</pagerExpr>
+    <pagerDisableCmd>terminal length 0</pagerDisableCmd>
+    <unsavedChangesMessage></unsavedChangesMessage>
+
+    <jobs>
+        <copyRunScp>
+            <comment>Backup config via SCP</comment>
+            <jobType>copy_file</jobType>
+            <commandTimeout>180</commandTimeout>
+            <dateFormat>%Y%m%d</dateFormat>
+            <configExtension>tgz</configExtension>
+            <destConfigName>ipso-backup_[[DATE]].tgz</destConfigName>
+
+
+            <!-- configure the backup settings -->
+            <command>clish</command>
+            <!-- clish-prompt -->
+            <return>>.?</return>
+            <command>set backup manual filename ipso-backup</command>
+            <return>>.?</return>
+            <!-- create backup (creates local backup file /var/backup/ipso-backup_[[DATE]].tgz - see parameter <destConfigName>) -->
+            <command>set backup manual on</command>
+            <return>backup successful</return>
+            <!-- configure the backup settings -->
+            <command>set backup remote site [[SERVER_IP]] dir [[SERVER_ROOT]] protocol scp user [[SERVER_USERNAME]]</command>
+            <return>>.?</return>
+            <!-- copy backup to server via scp -->
+            <command>set backup remote manual [[DEST_CONFIG_NAME]] passwd [[SERVER_PASSWORD]]</command>
+            <return>>.?</return>
+            <!-- delete a manual backup file from the /var/backup directory -->
+            <command>delete backup manual filename [[DEST_CONFIG_NAME]]</command>
+            <return>the archive has been removed</return>
+            <!-- exit clish -->
+            <command>exit</command>
+            <return>[[ENABLE_PROMPT]]</return>
+        </copyRunScp>
+
+        <copyRunFtp>
+            <!-- checked -->
+            <comment>Backup config via FTP</comment>
+            <jobType>copy_file</jobType>
+            <commandTimeout>180</commandTimeout>
+            <dateFormat>%Y%m%d</dateFormat>
+            <configExtension>tgz</configExtension>
+            <destConfigName>ipso-backup_[[DATE]].tgz</destConfigName>
+
+            <!-- configure the backup settings -->
+            <command>clish</command>
+            <!-- clish-prompt -->
+            <return>>.?</return>
+            <command>set backup manual filename ipso-backup</command>
+            <return>>.?</return>
+            <!-- create backup (creates local backup file /var/backup/ipso-backup_[[DATE]].tgz - see parameter <destConfigName>) -->
+            <command>set backup manual on</command>
+            <return>backup successful</return>
+            <!-- configure the backup settings -->
+            <command>set backup remote ftp-dir [[SERVER_ROOT]]</command>
+            <return>>.?</return>
+            <command>set backup remote ftp-site [[SERVER_IP]]</command>
+            <return>>.?</return>
+            <command>set backup remote ftp-user [[SERVER_USERNAME]]</command>
+            <return>>.?</return>
+            <!-- copy backup to server via ftp -->
+            <command>set backup remote manual [[DEST_CONFIG_NAME]] ftp-passwd [[SERVER_PASSWORD]][[SLEEP180]]</command>
+            <return>>.?</return>
+            <!-- delete the manual backup file from the /var/backup directory -->
+            <command>delete backup manual filename [[DEST_CONFIG_NAME]]</command>
+            <return>the archive has been removed</return>
+            <!-- exit clish -->
+            <command>exit</command>
+            <return>[[ENABLE_PROMPT]]</return>
+        </copyRunFtp>
+
+    </jobs>
+
+</deviceGroupValues>

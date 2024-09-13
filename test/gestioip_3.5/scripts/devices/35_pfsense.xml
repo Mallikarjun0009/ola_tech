@@ -1,0 +1,66 @@
+<?xml version='1.0' encoding='UTF-8'?> 
+
+<!-- Commands for pfsense devices -->
+
+<deviceGroupValues>
+
+    <deviceGroupName>Pfsense</deviceGroupName>
+    <deviceGroupID>35</deviceGroupID>
+
+    <models>pfsense</models>
+
+<!--
+DUMMY VALUES
+-->
+    <enablePrompt>NO_PROMPT</enablePrompt>
+    <logoutCommand>NO_COMMMAND</logoutCommand>
+
+    <jobs>
+        <executeBackupScript80>
+            <!-- This job don't connects to the device. It executes a local script. This script
+            copies the configuration to a local diretory. From there, fetch_config.pl integrates
+            the configuration within the CM
+            -->
+            <comment>Execute fetch_pfsense_config.sh (port 80)</comment>
+            <jobType>copy_local</jobType>
+
+            <localSourceCommand>/usr/share/gestioip/bin/fetch_pfsense_config.sh</localSourceCommand>
+            <localSourceCommandPort>80</localSourceCommandPort>
+        </executeBackupScript80>
+
+        <executeBackupScript443>
+            <!-- This job don't connects to the device. It executes a local script. This scrip
+            copies the configuration to a local diretory. From there, fetch_config.pl integrates
+            the configuration within the CM
+            -->
+            <comment>Execute fetch_pfsense_config.sh (port 443)</comment>
+            <jobType>copy_local</jobType>
+
+            <localSourceCommand>/usr/share/gestioip/bin/fetch_pfsense_config.sh</localSourceCommand>
+            <localSourceCommandPort>443</localSourceCommandPort>
+        </executeBackupScript443>
+
+        <executeBackupScript8443>
+            <!-- This job don't connects to the device. It executes a local script. This scrip
+            copies the configuration to a local diretory. From there, fetch_config.pl integrates
+            the configuration within the CM
+            -->
+            <comment>Execute fetch_pfsense_config.sh (port 8443)</comment>
+            <jobType>copy_local</jobType>
+
+            <localSourceCommand>/usr/share/gestioip/bin/fetch_pfsense_config.sh</localSourceCommand>
+            <localSourceCommandPort>8443</localSourceCommandPort>
+        </executeBackupScript8443>
+
+        <saveLocalConfig1>
+            <!-- This job don't connects to the device. It only copies the already saved 
+            configuration locally to the backup directory and updates the "last backup date".
+            -->
+    	    <comment>Copy local configuration to backup directory</comment>
+            <jobType>copy_local</jobType>
+
+            <localSourceFile>/tmp/pfsense_fw1.xml</localSourceFile>
+        </saveLocalConfig1>
+    </jobs>
+
+</deviceGroupValues>

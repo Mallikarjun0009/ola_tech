@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='UTF-8'?> 
+
+<!-- Commands for Force10 switches -->
+
+<deviceGroupValues>
+
+    <deviceGroupName>Force10</deviceGroupName>
+    <deviceGroupID>43</deviceGroupID>
+
+    <models></models>
+
+    <loginPrompt>></loginPrompt>
+    <enablePrompt>#</enablePrompt>
+    <enableCommand>enable</enableCommand>
+    <usernameExpr>[[GENERIC_USERNAME_EXPR]]</usernameExpr>
+    <passwordExpr>[[GENERIC_PASSWORD_EXPR]]</passwordExpr>
+    <logoutCommand>exit</logoutCommand>
+
+    <jobs>
+        <copyRunTftp>
+            <comment>Backup running config via TFTP</comment>
+            <jobType>copy_file</jobType>
+
+            <command>copy running-config tftp://[[SERVER_IP]]/[[CONFIG_NAME]]</command>
+            <return>successfully copied</return>
+        </copyRunTftp>
+
+        <copyTftpRun>
+            <comment>Restore running config from TFTP</comment>
+            <jobType>task</jobType>
+
+            <command>copy tftp://[[SERVER_IP]]/[[UPLOAD_CONFIG_NAME]] running-config</command>
+            <return>[[ENABLE_PROMPT]]</return>
+        </copyTftpRun>
+    </jobs>
+
+</deviceGroupValues>

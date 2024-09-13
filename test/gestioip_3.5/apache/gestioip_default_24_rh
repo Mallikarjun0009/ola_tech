@@ -1,0 +1,92 @@
+# Apache 2.4 configuration file for GestioIP
+
+#RewriteEngine on
+# if authorization header is empty (non-authenticated client)
+#RewriteCond %{HTTP:Authorization} ^$
+# redirect to new url
+#RewriteRule /* /var/www/gestioip/login/login.html
+
+LimitRequestLine 15000
+TimeOut 600
+
+<Directory "/var/www/gestioip">
+    AddHandler cgi-script .cgi
+    AddDefaultCharset utf8
+    AllowOverride None
+    DirectoryIndex index.cgi
+    Options +ExecCGI +FollowSymLinks
+
+    AuthFormProvider file ldap
+    AuthType form
+    AuthName GestioIP
+    Session On
+    SessionEnv On
+    SessionCookieName session path=/
+    SessionCryptoPassphrase CHANGE_ME_SECRET
+
+    AuthUserFile AUTH_USER_FILE
+    AuthGroupFile AUTH_GROUP_FILE
+
+    Include APACHE_LDAP_CONF
+
+    <LimitExcept GET POST>
+        Require all denied
+    </LimitExcept>
+
+    <RequireAll>
+#       Require ip 127.0.0.0/24 192.168.1.0/24
+        <RequireAny>
+            Require group GestioIPGroup
+            Include APACHE_LDAP_REQUIRE
+        </RequireAny>
+    </RequireAll>
+
+    ErrorDocument 401 /login/login.html
+    ErrorDocument 403 /errors/error403.html
+    ErrorDocument 404 /errors/error404.html
+    ErrorDocument 500 /errors/error500.html
+</Directory>
+
+<Directory "/var/www/gestioip/api">
+    AuthType Basic
+</Directory>
+
+<Directory "/var/www/gestioip/login">
+    Order deny,allow
+    Allow from All
+    Satisfy Any
+</Directory>
+
+<Directory "/var/www/gestioip/logout">
+	SetHandler form-logout-handler
+	AuthFormLogoutLocation /login/logout.cgi
+	Session On
+	SessionMaxAge 1
+	SessionCookieName session path=/
+</Directory>
+
+<Directory "/var/www/gestioip/priv">
+	AddDefaultCharset utf8
+	AllowOverride None
+	Require all denied
+</Directory>
+
+<Directory "/var/www/gestioip/modules">
+	AddDefaultCharset utf8
+	AllowOverride None
+	Require all denied
+</Directory>
+
+<Directory "/var/www/gestioip/errors">
+	AddDefaultCharset utf8
+	AllowOverride None
+    Order deny,allow
+    Allow from All
+    Satisfy Any
+</Directory>
+
+<Directory "/var/www/gestioip/css">
+    Order deny,allow
+    Allow from All
+    Satisfy Any
+</Directory>

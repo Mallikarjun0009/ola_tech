@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='UTF-8'?> 
+
+<!-- Commands for Foundry ServerIron devices -->
+
+<deviceGroupValues>
+
+    <deviceGroupName>Foundry ServerIron</deviceGroupName>
+    <deviceGroupID>14</deviceGroupID>
+
+    <models>ServerIron</models>
+
+
+    <loginPrompt>></loginPrompt>
+    <enablePrompt>#|(enable)</enablePrompt>
+    <enableCommand>enable</enableCommand>
+    <usernameExpr>[[GENERIC_USERNAME_EXPR]]</usernameExpr>
+    <passwordExpr>[[GENERIC_PASSWORD_EXPR]]</passwordExpr>
+    <logoutCommand>logout</logoutCommand>
+    <pagerExpr>--More--</pagerExpr>
+    <pagerDisableCmd>skip-page-display</pagerDisableCmd>
+
+    <jobs>
+        <copyRunTftp>
+            <comment>Backup running config via TFTP</comment>
+            <jobType>copy_file</jobType>
+
+            <command>copy running-config tftp [[SERVER_IP]] [[CONFIG_NAME]]</command>
+            <return>\.\..*Done</return>
+        </copyRunTftp>
+
+        <copyStartupTftp>
+            <comment>Backup startup-config via TFTP</comment>
+            <jobType>copy_file</jobType>
+
+            <command>copy startup-config tftp [[SERVER_IP]] [[CONFIG_NAME]]</command>
+            <return>\.\..*Done</return>
+        </copyStartupTftp>
+
+        <copyTftpStartup>
+            <comment>Copy backup config from TFTP to startup-config</comment>
+            <jobType>task</jobType>
+
+            <command>copy tftp startup-config [[SERVER_IP]] [[CONFIG_NAME]]</command>
+            <return>[[ENABLE_PROMPT]]</return>
+        </copyTftpStartup>
+
+    </jobs>
+
+</deviceGroupValues>

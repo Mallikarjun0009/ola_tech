@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='UTF-8'?> 
+
+<!-- Commands for devices running ExtremeOS -->
+
+<deviceGroupValues>
+
+    <deviceGroupName>EXOS</deviceGroupName>
+    <deviceGroupID>12</deviceGroupID>
+
+    <models>EXOS</models>
+
+    <loginPrompt></loginPrompt>
+    <enablePrompt>#</enablePrompt>
+    <enableCommand></enableCommand>
+    <usernameExpr>[[GENERIC_USERNAME_EXPR]]</usernameExpr>
+    <passwordExpr>[[GENERIC_PASSWORD_EXPR]]</passwordExpr>
+    <logoutCommand>exit</logoutCommand>
+    <pagerDisableCmd>disable clipaging</pagerDisableCmd>
+    <pagerExpr></pagerExpr>
+
+    <jobs>
+        <copyRunTftp>
+            <comment>Backup running config via TFTP</comment>
+            <jobType>copy_file</jobType>
+
+            <command>upload configuration [[SERVER_IP]] [[CONFIG_NAME]]</command>
+            <return>done!</return>
+        </copyRunTftp>
+
+        <copyRunScp>
+            <comment>Backup primary.cfg via SCP</comment>
+            <jobType>copy_file</jobType>
+
+            <command>scp2 primary.cfg [[SERVER_USERNAME]]@[[SERVER_IP]]:[[SERVER_ROOT]]/[[CONFIG_NAME]]</command>
+            <return>[[GENERIC_PASSWORD_EXPR]]</return>
+            <command>[[SERVER_PASSWORD]]</command>
+            <return>done!</return>
+        </copyRunScp>
+
+        <uploadConfVrDefault>
+            <comment>Backup config via "upload conf"</comment>
+            <jobType>copy_file</jobType>
+
+            <command>upload conf [[SERVER_IP]] [[CONFIG_NAME]] vr-default</command>
+            <return>done!</return>
+        </uploadConfVrDefault>
+    </jobs>
+
+</deviceGroupValues>
+

@@ -1,0 +1,81 @@
+<?xml version='1.0' encoding='UTF-8'?> 
+
+<!-- Commands for Huawei switches with VRP software -->
+
+<deviceGroupValues>
+
+    <deviceGroupName>Huawei Switches</deviceGroupName>
+    <deviceGroupID>28</deviceGroupID>
+
+    <models>Huawei VRP</models>
+
+    <loginPrompt></loginPrompt>
+    <enablePrompt>></enablePrompt>
+    <usernameExpr>[[GENERIC_USERNAME_EXPR]]</usernameExpr>
+    <passwordExpr>[[GENERIC_PASSWORD_EXPR]]</passwordExpr>
+    <logoutCommand>quit</logoutCommand>
+
+    <jobs>
+        <backup_vrpcfg.zip_ToTFTP>
+            <comment>Backup standard configuration vrpcfg.zip via TFTP</comment>
+            <jobType>copy_file</jobType>
+            <destConfigName>vrpcfg.zip</destConfigName>
+
+            <command>tftp [[SERVER_IP]] put [[DEST_CONFIG_NAME]]</command>
+            <return>100%|successfully</return>
+        </backup_vrpcfg.zip_ToTFTP>
+
+        <backupConfigToTFTP>
+            <comment>Backup custom configuration .cfg via TFTP</comment>
+            <jobType>copy_file</jobType>
+            <!-- Replace config.cfg with the name of the configuration file -->
+            <destConfigName>config.cfg</destConfigName>
+
+            <command>tftp [[SERVER_IP]] put [[DEST_CONFIG_NAME]]</command>
+            <return>100%|successfully</return>
+        </backupConfigToTFTP>
+
+        <restoreConfigFromTFTP>
+            <comment>Restore a configuration via TFTP</comment>
+            <jobType>task</jobType>
+
+            <command>tftp [[SERVER_IP]] get [[UPLOAD_CONFIG_NAME]]</command>
+            <return>100%|successfully</return>
+        </restoreConfigFromTFTP>
+
+        <backup_vrpcfg.zip_ToFTP>
+            <comment>Backup standard configuration vrpcfg.zip via FTP</comment>
+            <jobType>copy_file</jobType>
+            <destConfigName>vrpcfg.zip</destConfigName>
+
+            <command>ftp [[SERVER_IP]]</command>
+            <return>[[GENERIC_USERNAME_EXPR]]</return>
+            <command>[[SERVER_USERNAME]]</command>
+            <return>[[GENERIC_PASSWORD_EXPR]]</return>
+            <command>[[SERVER_PASSWORD]]</command>
+            <return>ftp</return>
+            <command>put [[DEST_CONFIG_NAME]]</command>
+            <return>Transfer complete</return>
+            <command>bye</command>
+            <return>[[ENABLE_PROMPT]]</return>
+        </backup_vrpcfg.zip_ToFTP>
+
+        <restore_vrpcfg.zip_ToFTP>
+            <comment>Restore configuration via FTP</comment>
+            <jobType>task</jobType>
+
+            <command>ftp [[SERVER_IP]]</command>
+            <return>[[GENERIC_USERNAME_EXPR]]</return>
+            <command>[[SERVER_USERNAME]]</command>
+            <return>[[GENERIC_PASSWORD_EXPR]]</return>
+            <command>[[SERVER_PASSWORD]]</command>
+            <return>ftp</return>
+            <command>get [[UPLOAD_CONFIG_NAME]]</command>
+            <return>Transfer complete</return>
+            <command>bye</command>
+            <return>[[ENABLE_PROMPT]]</return>
+        </restore_vrpcfg.zip_ToFTP>
+
+    </jobs>
+
+</deviceGroupValues>

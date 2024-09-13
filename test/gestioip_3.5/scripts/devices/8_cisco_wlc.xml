@@ -1,0 +1,91 @@
+<?xml version='1.0' encoding='UTF-8'?> 
+
+<!-- Commands for Cisco WLC devices-->
+
+<deviceGroupValues>
+
+    <deviceGroupName>Cisco WLC</deviceGroupName>
+    <deviceGroupID>8</deviceGroupID>
+
+    <models>Cisco WLC</models>
+
+    <loginPrompt>NO_PROMPT</loginPrompt>
+    <enablePrompt>></enablePrompt>
+    <enableCommand>enable</enableCommand>
+    <usernameExpr>[[GENERIC_USERNAME_EXPR]]</usernameExpr>
+    <passwordExpr>[[GENERIC_PASSWORD_EXPR]]</passwordExpr>
+    <logoutCommand>logout</logoutCommand>
+    <pagerDisableCmd>config paging disable</pagerDisableCmd>
+    <pagerExpr>--More--</pagerExpr>
+
+    <jobs>
+        <copyRunTftp>
+            <comment>Backup running config via TFTP</comment>
+            <jobType>copy_file</jobType>
+            <commandTimeout>180</commandTimeout>
+            <diffConfigIgnore>transfer upload filename</diffConfigIgnore>
+            <diffConfigIgnore>transfer download filename</diffConfigIgnore>
+            <diffConfigIgnore>config radius auth add encrypt</diffConfigIgnore>
+
+            <command>transfer upload datatype config</command>
+            <return>[[ENABLE_PROMPT]]</return>
+            <command>transfer upload mode tftp</command>
+            <return>[[ENABLE_PROMPT]]</return>
+            <command>transfer upload serverip [[SERVER_IP]]</command>
+            <return>[[ENABLE_PROMPT]]</return>
+            <command>transfer upload filename [[CONFIG_NAME]]</command>
+            <return>[[ENABLE_PROMPT]]</return>
+            <command>transfer upload start</command>
+            <return>(y/N)</return>
+            <command>y</command>
+            <return>File transfer operation completed successfully</return>
+        </copyRunTftp>
+
+        <copyRunFtp>
+            <comment>Backup running config via FTP</comment>
+            <jobType>copy_file</jobType>
+
+            <command>transfer upload datatype config</command>
+            <return>[[ENABLE_PROMPT]]</return>
+            <command>transfer upload mode ftp</command>
+            <return>[[ENABLE_PROMPT]]</return>
+            <command>transfer upload username [[SERVER_USERNAME]]</command>
+            <return>[[ENABLE_PROMPT]]</return>
+            <command>transfer upload password [[SERVER_PASSWORD]]</command>
+            <return>[[ENABLE_PROMPT]]</return>
+            <command>transfer upload serverip [[SERVER_IP]]</command>
+            <return>[[ENABLE_PROMPT]]</return>
+            <command>transfer upload filename [[CONFIG_NAME]]</command>
+            <return>[[ENABLE_PROMPT]]</return>
+            <command>transfer upload start</command>
+            <return>(y/N)</return>
+            <command>y</command>
+            <return>[[ENABLE_PROMPT]]</return>
+        </copyRunFtp>
+
+        <changeWpaKey>
+            <jobType>copy_file</jobType>
+            <comment>TEST - Do not use - Change WPA Key</comment>
+
+            <command>config wlan disable 1</command>
+            <return>[[ENABLE_PROMPT]]</return>
+            <command>config wlan security wpa akm psk set-key ascii [[FILE_CONTENT:/tmp/new_key.txt]] 1</command>
+            <return>[[ENABLE_PROMPT]]</return>
+            <command>config wlan enable 1</command>
+            <return>[[ENABLE_PROMPT]]</return>
+            <command>save Config</command>
+            <return>[[ENABLE_PROMPT]]</return>
+        </changeWpaKey>
+
+	<showApSummary>
+            <jobType>fetch_command_output</jobType>
+            <comment>Show AP summary</comment>
+
+            <command>show AP sum</command>
+            <return>[[ENABLE_PROMPT]]</return>
+	</showApSummary>
+
+
+    </jobs>
+
+</deviceGroupValues>

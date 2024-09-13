@@ -1,0 +1,315 @@
+<?xml version='1.0' encoding='UTF-8'?> 
+
+<!-- Commands for devices running Cisco IOS -->
+
+<deviceGroupValues>
+
+    <!--
+    # Device Type Group Name - this value will be displayed in the Device Type
+    # Group select box of the Web interface
+    # Mandatory
+    -->
+    <deviceGroupName>Cisco IOS</deviceGroupName>
+
+    <!--
+    # Internal ID of the Device Group - must be identical with XML file's serial number
+    # e.g. 17_MyOS.xml -> XML file's serial number = Device Type Group ID = 17
+    # Device Type Group ID must be unique for every Device Type Group
+    # Mandatory
+    -->
+    <deviceGroupID>1</deviceGroupID>
+
+    <!--
+    # List of models
+    # Optional
+    -->
+    <models>IOS,PIX/ASA 7.x/8.x</models>
+
+    <!--
+    # Login Prompt - prompt which is displayed after login but which does not have
+    # sufficient privileges to execute the commands. Leave this value blank if there
+    # is no command type "enable" required (if you access directly to the privileged
+    # mode after login to the device)
+    # Optional
+    -->
+    <loginPrompt>></loginPrompt>
+
+    <!--
+    # Enable Prompt - prompt of mode from which the commands can be executed
+    # Mandatory
+    -->
+    <enablePrompt>#|(enable)</enablePrompt>
+
+    <!--
+    # In the case that there appears a message before the login prompt, configure an expression which matches this message here. The message will be confirmed by the
+    # fetch_config.pl script with RETURN
+    # Optional
+    -->
+    <preLoginConfirmationExpr>Press any key to continue</preLoginConfirmationExpr>
+
+    <!--
+    # In the case that after a successful login appears a message which requires a confirmation instead of the login or
+    # enable prompt, configure an expression which matches this message here. The message will be confirmed by the
+    # fetch_config.pl script with RETURN
+    # Optional
+    -->
+    <loginConfirmationExpr>Terminal type?</loginConfirmationExpr>
+
+    <!--
+    # Enable command - command to gain the privileges to execute the commands (to enter the "enable" mode)
+    # Optional
+    -->
+    <enableCommand>enable</enableCommand>
+
+    <!--
+    # Username expression - expression which matches logins 'username: ' string
+    # The value [[GENERIC_USERNAME_EXPR]] should match for most devices and
+    # need normally not to be changed
+    # Optional
+    -->
+    <usernameExpr>[[GENERIC_USERNAME_EXPR]]</usernameExpr>
+
+    <!--
+    # Password expression - expression which matches logins 'password: ' string
+    # The value [[GENERIC_PASSWORD_EXPR]] should match for most devices and
+    # normally need not to be changed
+    # Optional
+    -->
+    <passwordExpr>[[GENERIC_PASSWORD_EXPR]]</passwordExpr>
+
+    <!--
+    # Logout Command - command to logout from the remote session 
+    # Mandatory
+    -->
+    <logoutCommand>exit</logoutCommand>
+
+    <!--
+    # Pager expression - Expression which indicates that there will come more
+    # command output (will be internally confirmed with "enter") 
+    # Optional
+    -->
+    <pagerExpr>--More--</pagerExpr>
+
+    <!--
+    # Pager Disable command - command to disable paging
+    # Optional (Because some devices do not use paging. For devices which have
+    # paging enabled, this attribute is mandatory)
+    -->
+    <pagerDisableCmd>terminal length 0</pagerDisableCmd>
+
+    <!--
+    # Unsaved changes question - Expression that matches the question if the
+    # unsaved configuration changes should be saved before logging out
+    # Optional
+    -->
+    <unsavedChangesMessage>The system has unsaved changes|Would you like to save them now|Do you wish to save your configuration changes</unsavedChangesMessage>
+
+    <!--
+    # show hostname command - Command to get the hostname of the device
+    # Optional
+    -->
+    <showHostnameCommand>hostname</showHostnameCommand>
+
+
+    <!--
+    # Job definition
+    -->
+    <jobs>
+
+        <!--
+        # Job short name - arbitrary Job name
+        # Mandatory
+        -->
+        <copyRunTftp>
+
+            <!--
+            # Job comment - this value will be displayed in the "Job" select box
+            # of the Web interface
+            # Mandatory
+            -->
+            <comment>Backup running config via TFTP</comment>
+
+            <!--
+            Job Type – This attributes determines how the Job will be internally processed.
+
+            # There are four Job Types available:
+            # copy_file – Use this value if the Job should copy a configuration/a file from
+            #             the device to the server. Example: backup the configuration of a device via
+            #             FTP or TFTP.
+            # fetch_command_output – Use this value if the Job should execute a command on the device
+            #             and store the command's output. Example: fetch and store the output of the command
+            #             “show arp”
+            # task – Use this value if the Job should execute a command on the device without storing the
+            #        command output.
+            # copy_local – to copy a file which is already saved on the Backup Server locally to the backup
+            #              directory. To integrate configuration files which can not be fetched by GestióIP
+            #              within the Configuration Management Module. copy_local Jobs do not connect to the
+            #              devices nor execute commands on the devices. copy_local Jobs do only accept the
+            #              attributes  <comment>, <jobType>, <localSourceFile> and <localSourceCommand>, <localSourceCommandPort>. See 25_juniper_ive.xml
+            #              and 35_pfsense.xml for examples.
+            #              copy_local allows also to execute local scripts:
+            #              Example:
+            #              <localSourceCommand>/usr/share/gestioip/bin/create_pfsense_backup.sh</localSourceCommand>
+            #              <localSourceCommandPort>8443</localSourceCommandPort>
+            #              Would execute the command create_pfsense_backup.sh
+            #              The script downloads the configuration and copies it to the specified location.
+            #              fetch_config.pl executes automatically the script with the following arguments:
+            #              device_ip localSourceCommandPort backup_file_name user_name login_pass
+
+                            
+
+            # NOTE: Upload Jobs, which copy configurations from the server to the device (for example to restore
+            # a backuped configuration) MUST have the jobType “task” 
+            # Mandatory
+            -->
+            <jobType>copy_file</jobType>
+
+            <!--
+            # Saved configuration may only differ with actual configuration in an "unimportant" string
+            # like "saved_cfg_timestamp ...."
+            # This option allows to configure a string which match lines which should not be compared when
+            # determining if the configuration has changed
+            # Optional
+            -->
+            <diffConfigIgnore>saved_cfg_timestamp|other_ignore_string</diffConfigIgnore>
+
+
+            <!--
+            # Command Timeout - will replace the default command execution timeout of 92s
+            #
+            -->
+            <commandTimeout>120</commandTimeout>
+
+            <!--
+            # Backup file Extension - if you want to save the file with a specific extension (eg. tar.gz).
+            # Depending on the Job Type, the file will be automatically stored with the extension ".conf"
+            # (type "copy_file") or ".txt" (type "fetch_command_output"), independently of the extension
+            # of the original config file. Use this option to force the backupfile to be stored on the server
+            # with another extension than .conf or .txt.
+            # Optional
+            -->
+            <configExtension>tar.gz</configExtension>
+
+            <!--
+            # Date format parameter allows to specify the format of the date which should be replaced by the
+            # [[DATE]] variable.
+            # Supported date specifiers:
+            #  %d - Day of the month, zero-padded (01-31)
+            #  %D - Day of the month (1-31)
+            #  %H - Hour in 24h format (00-23)
+            #  %I - Hour in 12h format (01-12)
+            #  %m - Month as a decimal number (01-12)
+            #  %b - The abbreviated month name according to the current locale
+            #  %M - Minute (00-59)
+            #  %y - Year, last two digits (00-99)
+            #  %Y - Year, four digits (2014)
+            #
+            #  Example: with <dateFormat> set to "Y%m%d", ipso-backup_[[DATE]].tar.gz will be translated to
+            #  ipso-backup_20190425.tar.gz            
+            # Optional
+            -->
+           <dateFormat>%Y%m%d</dateFormat>
+
+            <!--
+            # Name of the configuration file on the device. To set the value for the [[DEST_CONFIG_NAME]] variable.
+            # Normally the destination file will be specified with the [[CONFIG_NAME]] variable
+            # (e.g. “copy configs/device_cm.cfg tftp://[[SERVER_IP]]/[[CONFIG_NAME]]”).
+            # In the case that the device does not permit to specify the destination file name you must indicate the
+            # name of the configuration file which will be copied to the GestóIP server with the [[DEST_CONFIG_NAME]] variable.
+            # (e.g. “set backup remote manual [[DEST_CONFIG_NAME]] ftp-passwd [[SERVER_PASSWORD]]”).
+            # Optional
+            -->
+           <destConfigName>ipso-backup_[[DATE]].tgz</destConfigName>
+            
+            <!--
+            #
+            # You can use the following variables within the <command> and <return> attributes:
+            #
+            # [[ENABLE_PROMPT]] - Will be replaced by the enable prompt (which is defined above (enablePrompt))
+            # [[CONFIG_NAME]] - Will be replaced by the correct name under which the configuration will
+            #                   be stored on the server (dest file). The destination file MUST always specified
+            #                   as "[[CONFIG_NAME]]" and not with the real name of the configuration.
+            #                   Example: scp config.cnf [[SERVER_USERNAME]]@[[SERVER_IP]]:/[[SERVER_ROOT]]/[[CONFIG_NAME]] 
+            # [[SERVER_IP]] - Will be replaced by the backup server IP address 
+            # [[SERVER_ROOT]] - Will be replaced by the backup server's ServerRoot directory
+            # [[SERVER_USERNAME]] - Will be replaced by the backup server's username
+            # [[SERVER_PASSWORD]] - Will be replaced by the backup server's password
+            # [[UPLOAD_CONFIG_NAME]] - Will be replaced by the filename of the configuration or file which should
+            #                          be uploaded to a device (only required for configuration or file "upload" jobs)
+            # [[DEVICE_USERNAME]] - Will be replaced by the username of the device (as defined in the Device User Group)
+            # [[IGNORE_ERRORS]] - The default behaviour is that the command executions is stopped when a command output
+            #                     matches the internal error expression. Add this variable to a command, if the command
+            #                     execution should NOT be stopped after an error expression match.
+            #                     This variable can only be used within the <command> attribute
+            #                     Example: The output of the command "ifconfig -a" contains the word "error":
+            #                                 "RX packets:4153 errors:0 dropped:0 overruns:0 frame:0"
+            #                              This will cause that fetch_config.pl detects the keyword "error" and skips the 
+            #                              execution of this command. Use the variable [[IGNORE_ERRORS]] to avoid that the
+            #                              command execution is stopped after a match of the error expression.
+            #                             <command>ifconfig -a[[IGNORE_ERRORS]]</command>
+            # [[IGNORE_ERRORSexpression to ignore]] - Same as [[IGNORE_ERRORS]] with the difference that only the detected error
+            #                     which matches the "expression to ignore" will be ignored. All other errors will cause that the
+            #                     script stops.
+            #                     Example:
+            #                         The output of the command "show configuration" of a Juniper device contains the line
+            #                         "disable-timeout 300;". This line matches the internal error string "[Tt]imeout" and stops 
+            #                         the execution of this job. With the following <command>, the lines containing the string
+            #                         "disable-timeout" will be ignored:
+            #                         <command>show configuration[[IGNORE_ERRORSdisable-timeout]]</command>
+            # [[SLEEPsss]] - Wait sss seconds after executing the command. This value can only be used within the
+            #               <command> attribute.
+            #               Example: <command>copy config backup server[[SLEEP60]]</command> - Wait 60s before executing
+            #               the next command which comes after "copy config backup server"
+            # [[FILE_CONTENT:/path/ascii_file]] - Will be replaced with the content of "/path/ascii_file"
+            #
+            # [[DATE]] - Will be replaced by the date in the format specified in the <dateFormat></dateFormat> attribute.
+            #            This variable can only be used within the <command> attribute.
+            #            Requires the <dateFormat></dateFormat> attribute
+            #
+            # [[DEST_CONFIG_NAME]] - Will be replaced by the value of the <destConfigName>-attribute
+            # [[HOSTNAME]] - Will be replaced by the hostname of the device. Requiers the <showHostnameCommand> global
+            #                attribute
+            --> 
+
+            <!--
+            # Command - command to execute
+            <--
+            <command>copy running-config tftp:</command>
+
+            <!--
+            # Return expression - Expression which matches the expected return from the executed command
+            <--
+            <return>Address or name of remote host</return>
+
+            <command>[[SERVER_IP]]</command>
+            <return>Destination filename</return>
+
+            <command>[[CONFIG_NAME]]</command>
+            <return>!!\r*\n*.*bytes copied.*</return>
+
+        </copyRunTftp>
+
+
+        <copyFftpRun>
+            <comment>copy tftp: running-config</comment>
+
+            <command>copy tftp: running-config</command>
+            <return>Address or name of remote host</return>
+            <command>[[SERVER_IP]]</command>
+            <return>Source filename</return>
+            <command>[[UPLOAD_CONFIG_NAME]]</command>
+            <return>Destination filename</return>
+            <return>[[CONFIG_NAME]]</return>
+            <return>OK.*\r*\n*.*bytes copied.*</return>
+        </copyTftpRun>
+
+        <showArp>
+            <comment>Show Arp</comment>
+
+            <command>show arp</command>
+            <return>[[ENABLE_PROMPT]]</return>
+        </showArp>
+
+    </jobs>
+
+</deviceGroupValues>

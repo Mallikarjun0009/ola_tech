@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='UTF-8'?> 
+
+<!-- Commands for devices Fujitsu-->
+
+<deviceGroupValues>
+
+    <deviceGroupName>Fujitsu</deviceGroupName>
+    <deviceGroupID>17</deviceGroupID>
+
+    <models>XG700</models>
+
+    <loginPrompt>></loginPrompt>
+    <enablePrompt>#</enablePrompt>
+    <enableCommand>enable</enableCommand>
+    <usernameExpr>[[GENERIC_USERNAME_EXPR]]</usernameExpr>
+    <passwordExpr>[[GENERIC_PASSWORD_EXPR]]</passwordExpr>
+    <logoutCommand>exit</logoutCommand>
+    <pagerDisableCmd>terminal pager disable</pagerDisableCmd>
+
+    <jobs>
+        <copyRunTftp>
+            <comment>Backup running config via TFTP</comment>
+            <jobType>copy_file</jobType>
+
+            <command>show startup-config | tftp [[SERVER_IP]] [[CONFIG_NAME]]</command>
+            <return>[[ENABLE_PROMPT]]</return>
+        </copyRunTftp>
+
+    </jobs>
+
+</deviceGroupValues>

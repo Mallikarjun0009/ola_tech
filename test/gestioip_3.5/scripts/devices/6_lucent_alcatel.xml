@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='UTF-8'?> 
+
+<!-- Commands for Lucent-Alcatel devices -->
+
+<deviceGroupValues>
+
+    <deviceGroupName>Lucent-Alcatel</deviceGroupName>
+    <deviceGroupID>6</deviceGroupID>
+
+    <models>OS6450</models>
+
+    <loginPrompt>NO_PROMPT</loginPrompt>
+    <enablePrompt>></enablePrompt>
+    <enableCommand>enable</enableCommand>
+    <usernameExpr>[[GENERIC_USERNAME_EXPR]]</usernameExpr>
+    <passwordExpr>[[GENERIC_PASSWORD_EXPR]]</passwordExpr>
+    <logoutCommand>exit</logoutCommand>
+    <pagerExpr></pagerExpr>
+
+    <jobs>
+        <copyRunTftp>
+            <comment>Backup running config via TFTP</comment>
+            <jobType>copy_file</jobType>
+
+            <command>tftp [[SERVER_IP]] PUT source-file /flash/working/boot.cfg destination-file [[CONFIG_NAME]] ascii</command>
+            <return>[[ENABLE_PROMPT]]</return>
+        </copyRunTftp>
+
+    </jobs>
+
+</deviceGroupValues>

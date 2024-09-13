@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='UTF-8'?> 
+
+<!-- Commands for devices running Linux -->
+
+<deviceGroupValues>
+
+    <deviceGroupName>Linux (root)</deviceGroupName>
+    <deviceGroupID>20</deviceGroupID>
+
+    <models></models>
+
+    <loginPrompt>$|></loginPrompt>
+    <enablePrompt>#</enablePrompt>
+    <enableCommand>su - root</enableCommand>
+    <usernameExpr>[[GENERIC_USERNAME_EXPR]]</usernameExpr>
+    <passwordExpr>[[GENERIC_PASSWORD_EXPR]]</passwordExpr>
+    <logoutCommand>exit</logoutCommand>
+
+    <jobs>
+        <copyFileToFTP>
+            <comment>EXAMPLE: upload file to server via FTP</comment>
+            <jobType>task</jobType>
+
+            <command>cd /tmp</command>
+            <return>[[ENABLE_PROMPT]]</return>
+            <command>echo 'test' >  [[DEST_CONFIG_NAME]]</command>
+            <return>[[ENABLE_PROMPT]]</return>
+            <command>ftp [[SERVER_IP]]</command>
+            <return>Name</return>
+            <command>[[SERVER_USERNAME]]</command>
+            <return>Password</return>
+            <command>[[SERVER_PASSWORD]]</command>
+            <return>ftp></return>
+            <command>put file.txt</command>
+            <return>Transfer complete</return>
+            <command>bye</command>
+            <return>[[ENABLE_PROMPT]]</return>
+        </copyFileToFTP>
+
+        <copyFileToTftp>
+
+            <comment>EXAMPLE: upload file to server via  TFTP</comment>
+            <jobType>task</jobType>
+
+            <command>cd /tmp</command>
+            <return>[[ENABLE_PROMPT]]</return>
+            <command>echo 'test' >  [[DEST_CONFIG_NAME]]</command>
+            <return>[[ENABLE_PROMPT]]</return>
+            <command>tftp [[SERVER_IP]]</command>
+            <return>tftp></return>
+            <command>put file.txt</command>
+            <return>tftp></return>
+            <command>quit</command>
+            <return>[[ENABLE_PROMPT]]</return>
+        </copyFileToTftp>
+
+
+
+    </jobs>
+
+</deviceGroupValues>

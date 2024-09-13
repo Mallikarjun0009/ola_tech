@@ -1,0 +1,141 @@
+<?xml version='1.0' encoding='UTF-8'?> 
+
+<!-- Commands for devices running Linux -->
+
+<deviceGroupValues>
+
+    <deviceGroupName>Linux</deviceGroupName>
+    <deviceGroupID>21</deviceGroupID>
+
+    <models>Linux</models>
+
+    <enablePrompt>$|></enablePrompt>
+    <usernameExpr>[[GENERIC_USERNAME_EXPR]]</usernameExpr>
+    <passwordExpr>[[GENERIC_PASSWORD_EXPR]]</passwordExpr>
+    <logoutCommand>exit</logoutCommand>
+
+    <jobs>
+        <backupFileToFTP>
+            <comment>EXAMPLE: Backup file (FTP)</comment>
+            <jobType>copy_file</jobType>
+            <destConfigName>file.txt</destConfigName>
+
+            <command>cd /tmp</command>
+            <return>[[ENABLE_PROMPT]]</return>
+            <command>echo 'test' >  [[DEST_CONFIG_NAME]]</command>
+            <return>[[ENABLE_PROMPT]]</return>
+            <command>ftp [[SERVER_IP]]</command>
+            <return>Name</return>
+            <command>[[SERVER_USERNAME]]</command>
+            <return>Password</return>
+            <command>[[SERVER_PASSWORD]]</command>
+            <return>ftp></return>
+            <command>put [[DEST_CONFIG_NAME]]</command>
+            <return>Transfer complete</return>
+            <command>bye</command>
+            <return>[[ENABLE_PROMPT]]</return>
+        </backupFileToFTP>
+
+        <backupFileViaSCP>
+            <comment>EXAMPLE: Backup file (SCP)</comment>
+            <jobType>copy_file</jobType>
+            <destConfigName>file.txt</destConfigName>
+
+            <command>cd /tmp</command>
+            <return>[[ENABLE_PROMPT]]</return>
+            <command>echo 'test' > file.txt</command>
+            <return>[[ENABLE_PROMPT]]</return>
+            <command>scp file.txt [[SERVER_USERNAME]]@[[SERVER_IP]]:[[SERVER_ROOT]]/[[CONFIG_NAME]]</command>
+            <return>Password</return>
+            <command>[[SERVER_PASSWORD]]</command>
+            <return>100%</return>
+        </backupFileViaSCP>
+
+        <backupFileToTFTP>
+            <comment>EXAMPLE: Backup file (TFTP)</comment>
+            <jobType>copy_file</jobType>
+            <destConfigName>file.txt</destConfigName>
+
+            <command>cd /tmp</command>
+            <return>[[ENABLE_PROMPT]]</return>
+            <command>echo 'test' >  [[DEST_CONFIG_NAME]]</command>
+            <return>[[ENABLE_PROMPT]]</return>
+            <command>tftp [[SERVER_IP]]</command>
+            <return>tftp></return>
+            <command>put [[DEST_CONFIG_NAME]]</command>
+            <return>tftp></return>
+            <command>quit</command>
+            <return>[[ENABLE_PROMPT]]</return>
+        </backupFileToTFTP>
+
+
+        <copyFileToFTP>
+            <comment>EXAMPLE: upload file to server via FTP</comment>
+            <jobType>task</jobType>
+            <destConfigName>file.txt</destConfigName>
+
+            <command>cd /tmp</command>
+            <return>[[ENABLE_PROMPT]]</return>
+            <command>echo 'test' >  [[DEST_CONFIG_NAME]]</command>
+            <return>[[ENABLE_PROMPT]]</return>
+            <command>ftp [[SERVER_IP]]</command>
+            <return>Name</return>
+            <command>[[SERVER_USERNAME]]</command>
+            <return>Password</return>
+            <command>[[SERVER_PASSWORD]]</command>
+            <return>ftp></return>
+            <command>put file.txt</command>
+            <return>Transfer complete</return>
+            <command>bye</command>
+            <return>[[ENABLE_PROMPT]]</return>
+        </copyFileToFTP>
+
+        <copyFileToTftp>
+            <comment>EXAMPLE: upload file to server via TFTP</comment>
+            <jobType>task</jobType>
+
+            <command>cd /tmp</command>
+            <return>[[ENABLE_PROMPT]]</return>
+            <command>echo 'test' > file.txt</command>
+            <return>[[ENABLE_PROMPT]]</return>
+            <command>tftp [[SERVER_IP]]</command>
+            <return>tftp></return>
+            <command>put file.txt</command>
+            <return>tftp></return>
+            <command>quit</command>
+            <return>[[ENABLE_PROMPT]]</return>
+        </copyFileToTftp>
+
+        <copyFileToTftp2>
+            <comment>EXAMPLE: upload file to server via TFTP - 2</comment>
+            <jobType>task</jobType>
+
+            <command>tftp [[SERVER_IP]]</command>
+            <return>tftp></return>
+            <command>get [[UPLOAD_CONFIG_NAME]]</command>
+            <return>tftp></return>
+            <command>quit</command>
+            <return>[[ENABLE_PROMPT]]</return>
+            <command>cp /tftpboot/[[UPLOAD_CONFIG_NAME]] /tmp/</command>
+            <return>[[ENABLE_PROMPT]]</return>
+        </copyFileToTftp2>
+
+        <downloadFile>
+            <comment>EXAMPLE: upload file to host via TFTP - 3</comment>
+            <jobType>task</jobType>
+
+            <command>cd /tmp</command>
+            <return>[[ENABLE_PROMPT]]</return>
+            <command>tftp [[SERVER_IP]]</command>
+            <return>tftp></return>
+            <command>get [[UPLOAD_CONFIG_NAME]]</command>
+            <return>tftp></return>
+            <command>quit</command>
+            <return>[[ENABLE_PROMPT]]</return>
+        </downloadFile>
+
+
+
+    </jobs>
+
+</deviceGroupValues>

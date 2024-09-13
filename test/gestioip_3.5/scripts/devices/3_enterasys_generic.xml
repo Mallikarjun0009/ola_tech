@@ -1,0 +1,53 @@
+<?xml version='1.0' encoding='UTF-8'?> 
+
+<!-- Commands for Enterasys -->
+
+<deviceGroupValues>
+
+    <deviceGroupName>Enterasys</deviceGroupName>
+    <deviceGroupID>3</deviceGroupID>
+
+    <models>Matrix</models>
+
+    <loginPrompt>NO_PROMPT</loginPrompt>
+<!--    <enablePrompt>#|>|(SU)|(su)|(rw)|(admin)</enablePrompt> -->
+     <enablePrompt>([[DEVICE_USERNAME]])->|#</enablePrompt>
+    <enableCommand></enableCommand>
+    <usernameExpr>[[GENERIC_USERNAME_EXPR]]</usernameExpr>
+    <passwordExpr>[[GENERIC_PASSWORD_EXPR]]</passwordExpr>
+    <logoutCommand>exit</logoutCommand>
+    <pagerExpr></pagerExpr>
+
+    <jobs>
+        <copyRunTftp>
+            <comment>Backup running config via TFTP</comment>
+            <jobType>copy_file</jobType>
+
+            <command>delete configs/device_cm.cfg[[IGNORE_ERRORS]]</command>
+            <return>[[ENABLE_PROMPT]]</return>
+            <command>show config outfile configs/device_cm.cfg</command>
+            <return>[[ENABLE_PROMPT]]</return>
+            <command>copy configs/device_cm.cfg tftp://[[SERVER_IP]]/[[CONFIG_NAME]]</command>
+            <return>File transfer operation completed successfully</return>
+            <command>delete configs/device_cm.cfg</command>
+            <return>[[ENABLE_PROMPT]]</return>
+        </copyRunTftp>
+
+        <copyRunScp>
+            <comment>Backup running config via SCP</comment>
+            <jobType>copy_file</jobType>
+
+            <command>delete configs/device_cm.cfg[[IGNORE_ERRORS]]</command>
+            <return>[[ENABLE_PROMPT]]</return>
+            <command>show config outfile configs/device_cm.cfg</command>
+            <return>[[ENABLE_PROMPT]]</return>
+            <command>copy configs/device_cm.cfg scp://[[SERVER_USERNAME]]@[[SERVER_IP]]/[[CONFIG_NAME]]</command>
+            <return>[[GENERIC_PASSWORD_EXPR]]</return>
+            <command>[[SERVER_PASSWORD]]</command>
+            <return>[[ENABLE_PROMPT]]</return>
+            <command>delete configs/device_cm.cfg</command>
+            <return>[[ENABLE_PROMPT]]</return>
+        </copyRunScp>
+    </jobs>
+
+</deviceGroupValues>

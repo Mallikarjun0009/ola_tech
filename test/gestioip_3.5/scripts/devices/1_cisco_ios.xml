@@ -1,0 +1,112 @@
+<?xml version='1.0' encoding='UTF-8'?> 
+
+<!-- Commands for devices running Cisco IOS -->
+
+<deviceGroupValues>
+
+    <deviceGroupName>Cisco IOS</deviceGroupName>
+    <deviceGroupID>1</deviceGroupID>
+
+    <models>IOS,PIX/ASA 7.x/8.x</models>
+
+    <loginPrompt>></loginPrompt>
+    <enablePrompt>#|(enable)</enablePrompt>
+    <enableCommand>enable</enableCommand>
+    <usernameExpr>[[GENERIC_USERNAME_EXPR]]</usernameExpr>
+    <passwordExpr>[[GENERIC_PASSWORD_EXPR]]</passwordExpr>
+    <logoutCommand>exit</logoutCommand>
+    <pagerExpr>--More--</pagerExpr>
+    <pagerDisableCmd>terminal length 0</pagerDisableCmd>
+    <unsavedChangesMessage>The system has unsaved changes|Would you like to save them now|(Profile.Configuration) changes have occurred|Do you wish to save your configuration changes</unsavedChangesMessage>
+
+    <jobs>
+        <copyRunTftp>
+            <comment>Backup running config via TFTP</comment>
+            <jobType>copy_file</jobType>
+            <diffConfigIgnore>ntp clock-period</diffConfigIgnore>
+
+            <command>copy running-config tftp:</command>
+            <return>Address or name of remote host</return>
+            <command>[[SERVER_IP]]</command>
+            <return>Destination filename</return>
+            <command>[[CONFIG_NAME]][[SLEEP5]]</command>
+            <return>!!\r*\n*.*bytes copied.*</return>
+        </copyRunTftp>
+
+        <copyRunScp>
+            <comment>Backup running config via SCP</comment>
+            <jobType>copy_file</jobType>
+            <diffConfigIgnore>ntp clock-period</diffConfigIgnore>
+
+            <command>copy running-config scp:</command>
+            <return>Address or name of remote host</return>
+            <command>[[SERVER_IP]]</command>
+            <return>Destination username</return>
+            <command>[[SERVER_USERNAME]]</command>
+            <return>Destination filename</return>
+            <command>[[CONFIG_NAME]]</command>
+            <return>[[GENERIC_PASSWORD_EXPR]]</return>
+            <command>[[SERVER_PASSWORD]]</command>
+            <return>[[ENABLE_PROMPT]]</return>
+        </copyRunScp>
+
+        <showArp>
+            <comment>Show Arp</comment>
+            <jobType>fetch_command_output</jobType>
+
+            <command>show arp</command>
+            <return>[[ENABLE_PROMPT]]</return>
+        </showArp>
+
+        <showIntBrief>
+            <comment>Show Interface Brief</comment>
+            <jobType>fetch_command_output</jobType>
+
+            <command>show interface brief</command>
+            <return>[[ENABLE_PROMPT]]</return>
+        </showIntBrief>
+
+        <copyTftpRun>
+            <comment>Restore configuration from TFTP</comment>
+            <jobType>task</jobType>
+
+            <command>copy tftp: running-config</command>
+            <return>Address or name of remote host</return>
+            <command>[[SERVER_IP]]</command>
+            <return>Source filename</return>
+            <command>[[UPLOAD_CONFIG_NAME]]</command>
+            <return>Destination filename</return>
+            <command>running-config</command>
+            <return>OK</return>
+        </copyTftpRun>
+
+        <copyRunFtp>
+            <comment>Backup running config via FTP</comment>
+            <jobType>copy_file</jobType>
+            <diffConfigIgnore>ntp clock-period</diffConfigIgnore>
+
+            <command>copy running-config ftp:</command>
+            <return>Address or name of remote host</return>
+            <command>[[SERVER_IP]]</command>
+            <return>Destination filename</return>
+            <command>[[CONFIG_NAME]][[SLEEP5]]</command>
+            <return>!!\r*\n*.*bytes copied.*</return>
+        </copyRunFtp>
+
+        <copyFtpRun>
+            <comment>Restore configuration from FTP</comment>
+            <jobType>task</jobType>
+
+            <command>copy ftp: running-config</command>
+            <return>Address or name of remote host</return>
+            <command>[[SERVER_IP]]</command>
+            <return>Source filename</return>
+            <command>[[UPLOAD_CONFIG_NAME]]</command>
+            <return>Destination filename</return>
+            <command>running-config</command>
+            <return>OK</return>
+        </copyFtpRun>
+
+    </jobs>
+
+</deviceGroupValues>

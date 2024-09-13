@@ -1,0 +1,100 @@
+<?xml version='1.0' encoding='UTF-8'?> 
+
+<!-- Commands for HP devices -->
+
+<deviceGroupValues>
+
+    <deviceGroupName>HP ProCurve OLD</deviceGroupName>
+    <models>HP 3500, 5400zl, 6200yl, 6600, and 8200zl Switch Series</models>
+    <deviceGroupID>400</deviceGroupID>
+
+    <models></models>
+
+    <loginPrompt>></loginPrompt>
+    <enablePrompt>#|(enable)</enablePrompt>
+    <enableCommand>enable</enableCommand>
+    <usernameExpr>sername</usernameExpr>
+    <passwordExpr>assword</passwordExpr>
+    <logoutCommand>logout</logoutCommand>
+    <preLoginConfirmationExpr>Press any key to continue</preLoginConfirmationExpr>
+    <loginConfirmationExpr>Press any key to continue</loginConfirmationExpr>
+<!---
+    <pagerDisableCmd>terminal length 0</pagerDisableCmd>
+-->
+    <pagerDisableCmd>no page</pagerDisableCmd>
+    <pagerExpr></pagerExpr>
+    <unsavedChangesMessage>The system has unsaved changes|Would you like to save them now|(Profile.Configuration) changes have occurred|Do you wish to save your configuration changes|Do you want to save the current configuration</unsavedChangesMessage>
+
+    <jobs>
+        <copyRunTftp>
+            <comment>Backup running config via TFTP</comment>
+            <jobType>copy_file</jobType>
+
+            <command>config</command>
+            <return>.*</return>
+            <command>console local-terminal none</command>
+            <return>[[ENABLE_PROMPT]]</return>
+            <command>exit</command>
+            <return>[[ENABLE_PROMPT]]</return>
+            <command>copy running-config tftp [[SERVER_IP]] [[CONFIG_NAME]][[SLEEP10]]</command>
+            <return>[[ENABLE_PROMPT]]</return>
+            <command>config</command>
+            <return>[[ENABLE_PROMPT]]</return>
+            <command>console local-terminal vt100</command>
+            <return>[[ENABLE_PROMPT]]</return>
+            <command>exit</command>
+            <return>[[ENABLE_PROMPT]]</return>
+        </copyRunTftp>
+
+        <copyRunSftp>
+            <comment>Backup running configuration via SFTP</comment>
+            <jobType>copy_file</jobType>
+
+            <command>config</command>
+            <return>.*</return>
+            <command>console local-terminal none</command>
+            <return>[[ENABLE_PROMPT]]</return>
+            <command>exit</command>
+            <return>[[ENABLE_PROMPT]]</return>
+            <command>copy run sftp [[SERVER_USERNAME]]@[[SERVER_IP]] [[CONFIG_NAME]]</command>
+			<return>[[GENERIC_PASSWORD_EXPR]]</return>
+            <command>[[SERVER_PASSWORD]]</command>
+            <return>[[ENABLE_PROMPT]]</return>
+        </copyRunSftp>
+
+        <copyRunSftpMenu>
+            <comment>Backup running configuration via SFTP with menu</comment>
+            <jobType>copy_file</jobType>
+
+            <command>5</command>
+            <return>[[ENABLE_PROMPT]]</return>
+            <command>config</command>
+            <return>.*</return>
+            <command>console local-terminal none</command>
+            <return>[[ENABLE_PROMPT]]</return>
+            <command>exit</command>
+            <return>[[ENABLE_PROMPT]]</return>
+            <command>copy run sftp [[SERVER_USERNAME]]@[[SERVER_IP]] [[CONFIG_NAME]]</command>
+			<return>[[GENERIC_PASSWORD_EXPR]]</return>
+            <command>[[SERVER_PASSWORD]]</command>
+            <return>[[ENABLE_PROMPT]]</return>
+        </copyRunSftpMenu>
+
+        <copyTftpRun>
+            <comment>Restore running config from TFTP</comment>
+            <jobType>task</jobType>
+
+            <command>config</command>
+            <return>.*</return>
+            <command>console local-terminal none</command>
+            <return>[[ENABLE_PROMPT]]</return>
+            <command>exit</command>
+            <return>[[ENABLE_PROMPT]]</return>
+            <command>copy tftp startup-config [[SERVER_IP]] [[UPLOAD_CONFIG_NAME]]</command>
+            <return>Device may be rebooted, do you want to continue</return>
+            <command>y</command>
+            <return>[[ENABLE_PROMPT]]|Rebooting switch</return>
+        </copyTftpRun>
+    </jobs>
+
+</deviceGroupValues>

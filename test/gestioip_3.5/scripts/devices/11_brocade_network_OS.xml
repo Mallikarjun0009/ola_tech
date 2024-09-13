@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='UTF-8'?> 
+
+<!-- Commands for devices running Brocade Network OS -->
+
+<deviceGroupValues>
+
+    <deviceGroupName>Brocade Network OS</deviceGroupName>
+    <deviceGroupID>11</deviceGroupID>
+
+    <models>VDX</models>
+
+    <loginPrompt>></loginPrompt>
+    <enablePrompt>#</enablePrompt>
+    <enableCommand>enable</enableCommand>
+    <usernameExpr>[[GENERIC_USERNAME_EXPR]]</usernameExpr>
+    <passwordExpr>[[GENERIC_PASSWORD_EXPR]]</passwordExpr>
+    <logoutCommand>exit</logoutCommand>
+    <pagerExpr></pagerExpr>
+
+    <jobs>
+        <copyRunFtp>
+	    <comment>Backup running config to FTP</comment>
+            <jobType>copy_file</jobType>
+
+            <command>copy startup-config ftp://[[SERVER_USERNAME]]@[[SERVER_IP]]/[[SERVER_ROOT]]/[[CONFIG_NAME]]</command>
+            <return>[[ENABLE_PROMPT]]</return>
+        </copyRunFtp>
+
+        <copyRunScp>
+	    <comment>Backup running config via SCP</comment>
+            <jobType>copy_file</jobType>
+
+            <command>copy startup-config scp://[[SERVER_USERNAME]]@[[SERVER_IP]]/[[SERVER_ROOT]]/[[CONFIG_NAME]]</command>
+            <return>[[ENABLE_PROMPT]]</return>
+        </copyRunScp>
+
+    </jobs>
+
+</deviceGroupValues>

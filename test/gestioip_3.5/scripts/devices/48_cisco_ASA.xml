@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='UTF-8'?> 
+
+<!-- Commands for devices running Cisco IOS -->
+
+<deviceGroupValues>
+
+    <deviceGroupName>Cisco ASA 9.x</deviceGroupName>
+    <deviceGroupID>48</deviceGroupID>
+
+    <models>ASA 9.x</models>
+
+    <loginPrompt>></loginPrompt>
+    <enablePrompt>#|(enable)</enablePrompt>
+    <enableCommand>enable</enableCommand>
+    <usernameExpr>[[GENERIC_USERNAME_EXPR]]</usernameExpr>
+    <passwordExpr>[[GENERIC_PASSWORD_EXPR]]</passwordExpr>
+    <logoutCommand>exit</logoutCommand>
+    <pagerExpr>--More--</pagerExpr>
+    <pagerDisableCmd>terminal length 0</pagerDisableCmd>
+    <unsavedChangesMessage>The system has unsaved changes|Would you like to save them now|(Profile.Configuration) changes have occurred|Do you wish to save your configuration changes</unsavedChangesMessage>
+
+    <jobs>
+        <copyRunScp>
+            <comment>Backup running config via SCP</comment>
+            <jobType>copy_file</jobType>
+            <diffConfigIgnore>ntp clock-period</diffConfigIgnore>
+
+            <command>copy running-config scp:</command>
+            <return>Source filename</return>
+            <command></command>
+            <return>Address or name of remote host</return>
+            <command>[[SERVER_IP]]</command>
+            <return>Destination username</return>
+            <command>[[SERVER_USERNAME]]</command>
+            <return>Destination filename</return>
+            <command>[[CONFIG_NAME]]</command>
+            <return>[[GENERIC_PASSWORD_EXPR]]</return>
+            <command>[[SERVER_PASSWORD]]</command>
+            <return>!!\r*\n*.*bytes copied.*</return>
+        </copyRunScp>
+        <copyRunTftp>
+            <comment>Backup running config via TFTP</comment>
+            <jobType>copy_file</jobType>
+            <diffConfigIgnore>ntp clock-period</diffConfigIgnore>
+
+            <command>copy running-config tftp</command>
+            <return>Source filename</return>
+            <command></command>
+            <return>Address or name of remote host</return>
+            <command>[[SERVER_IP]]</command>
+            <return>Destination filename</return>
+            <command>[[CONFIG_NAME]]</command>
+            <return>!!\r*\n*.*bytes copied.*</return>
+        </copyRunTftp>
+    </jobs>
+
+</deviceGroupValues>

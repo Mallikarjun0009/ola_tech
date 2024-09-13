@@ -1,0 +1,169 @@
+<?xml version='1.0' encoding='UTF-8'?> 
+
+<!-- Commands for F5 BigIP -->
+
+<deviceGroupValues>
+
+    <deviceGroupName>F5 BigIP</deviceGroupName>
+    <deviceGroupID>19</deviceGroupID>
+
+    <models>BigIP LTM</models>
+
+    <loginPrompt></loginPrompt>
+    <enablePrompt>#</enablePrompt>
+    <enableCommand>enable</enableCommand>
+    <usernameExpr>[[GENERIC_USERNAME_EXPR]]</usernameExpr>
+    <passwordExpr>[[GENERIC_PASSWORD_EXPR]]</passwordExpr>
+    <logoutCommand>exit</logoutCommand>
+    <pagerExpr>--More--</pagerExpr>
+    <pagerDisableCmd>terminal length 0</pagerDisableCmd>
+    <unsavedChangesMessage></unsavedChangesMessage>
+
+    <jobs>
+        <copyUscScp12>
+            <comment>BIG-IP -ge v12.x: Backup config via SCP as UCS</comment>
+            <jobType>copy_file</jobType>
+            <destConfigName>f5_gestioip_bck.config.ucs</destConfigName>
+
+            <command>tmsh save /sys ucs f5_gestioip_bck.config</command>
+            <return>is saved</return>
+            <command>scp /var/local/ucs/[[DEST_CONFIG_NAME]] [[SERVER_USERNAME]]@[[SERVER_IP]]:[[SERVER_ROOT]]</command>
+<!-- Requieres that the host key is already stored -->
+            <return>.+</return>
+            <command>[[SERVER_PASSWORD]]</command>
+            <return>[[ENABLE_PROMPT]]</return>
+            <command>rm /var/local/ucs/[[DEST_CONFIG_NAME]]</command>
+            <return>[[ENABLE_PROMPT]]</return>
+        </copyUscScp12>
+
+        <copyUscFtp12>
+            <!-- checked -->
+            <comment>BIG-IP -ge v12.x: Backup config via FTP as UCS</comment>
+            <jobType>copy_file</jobType>
+
+            <command>tmsh save /sys ucs f5_gestioip_bck.config.ucs</command>
+            <return>is saved</return>
+            <command>ftp [[SERVER_IP]]</command>
+            <return>name|Name|User|user</return>
+            <command>[[SERVER_USERNAME]]</command>
+            <return>Pass|pass</return>
+            <command>[[SERVER_PASSWORD]]</command>
+            <return>ftp></return>
+            <command>put /var/local/ucs/f5_gestioip_bck.config.ucs [[CONFIG_NAME]]</command>
+            <return>Transfer complete</return>
+            <command>quit</command>
+            <return>[[ENABLE_PROMPT]]</return>
+            <command>rm /var/local/ucs/f5_gestioip_bck.config.ucs</command>
+            <return>[[ENABLE_PROMPT]]</return>
+        </copyUscFtp12>
+
+        <copyScfScp>
+            <comment>BIG-IP -ge v12.x: Backup config via SCP as SCF</comment>
+            <jobType>copy_file</jobType>
+            <destConfigName>f5_gestioip_bck.config.scf</destConfigName>
+
+            <command>tmsh save /sys config file [[DEST_CONFIG_NAME]]</command>
+            <return>/var/local/scf/[[DEST_CONFIG_NAME]]</return>
+            <command>scp /var/local/scf/[[DEST_CONFIG_NAME]] [[SERVER_USERNAME]]@[[SERVER_IP]]:[[SERVER_ROOT]]</command>
+<!-- Requieres that the host key is already stored -->
+            <return>.+</return>
+            <command>[[SERVER_PASSWORD]]</command>
+            <return>[[ENABLE_PROMPT]]</return>
+            <command>rm /var/local/scf/[[DEST_CONFIG_NAME]]</command>
+            <return>[[ENABLE_PROMPT]]</return>
+            <command>rm /var/local/scf/[[DEST_CONFIG_NAME]].tar</command>
+            <return>[[ENABLE_PROMPT]]</return>
+        </copyScfScp>
+
+        <copyScfFtp>
+            <!-- checked -->
+            <comment>BIG-IP -ge v12.x: Backup config via FTP as SCF</comment>
+            <jobType>copy_file</jobType>
+
+            <command>tmsh save /sys config file f5.conf</command>
+            <return>/var/local/scf/f5.conf</return>
+            <command>ftp [[SERVER_IP]]</command>
+            <return>name|Name|User|user</return>
+            <command>[[SERVER_USERNAME]]</command>
+            <return>Pass|pass</return>
+            <command>[[SERVER_PASSWORD]]</command>
+            <return>ftp></return>
+            <command>put /var/local/scf/f5.conf [[CONFIG_NAME]]</command>
+            <return>Transfer complete</return>
+            <command>quit</command>
+            <return>[[ENABLE_PROMPT]]</return>
+            <command>rm /var/local/scf/f5.conf</command>
+            <return>[[ENABLE_PROMPT]]</return>
+            <command>rm /var/local/scf/f5.conf.tar</command>
+            <return>[[ENABLE_PROMPT]]</return>
+        </copyScfFtp>
+
+
+        <copyScfFtp1>
+            <!-- checked -->
+            <comment>BIG-IP -ge v12.1: Backup config via FTP as SCF-no-passphrase</comment>
+            <jobType>copy_file</jobType>
+            <command>tmsh save /sys config file f5.conf no-passphrase</command>
+            <return>/var/local/scf/f5.conf</return>
+            <command>ftp [[SERVER_IP]]</command>
+            <return>name|Name|User|user</return>
+            <command>[[SERVER_USERNAME]]</command>
+            <return>Pass|pass</return>
+            <command>[[SERVER_PASSWORD]]</command>
+            <return>ftp></return>
+            <command>put /var/local/scf/f5.conf [[CONFIG_NAME]]</command>
+            <return>Transfer complete</return>
+            <command>quit</command>
+            <return>[[ENABLE_PROMPT]]</return>
+            <command>rm /var/local/scf/f5.conf</command>
+            <return>[[ENABLE_PROMPT]]</return>
+            <command>rm /var/local/scf/f5.conf.tar</command>
+            <return>[[ENABLE_PROMPT]]</return>
+        </copyScfFtp1>
+
+
+        <copyScfFtpExport>
+            <!-- checked -->
+            <comment>BIG-IP -le v11.x: create SCF backup with "bigpipe export ..." and copy it via FTP</comment>
+            <jobType>copy_file</jobType>
+
+            <command>bigpipe export f5_gestioip_bck</command>
+            <return>Saving configuration to /var/local/scf/f5_gestioip_bck.scf</return>
+            <command>ftp [[SERVER_IP]]</command>
+            <return>name|Name|User|user</return>
+            <command>[[SERVER_USERNAME]]</command>
+            <return>Pass|pass</return>
+            <command>[[SERVER_PASSWORD]]</command>
+            <return>ftp></return>
+            <command>put /var/local/scf/f5_gestioip_bck.scf [[CONFIG_NAME]]</command>
+            <return>Transfer complete</return>
+            <command>quit</command>
+            <return>[[ENABLE_PROMPT]]</return>
+            <command>rm /var/local/scf/f5_gestioip_bck.scf</command>
+            <return>[[ENABLE_PROMPT]]</return>
+        </copyScfFtpExport>
+
+
+        <copyUcsFtp11>
+            <!-- checked -->
+            <comment>BIG-IP -le v11.x: create UCS backup with "bigpipe config save ..." and copy it via FTP</comment>
+            <jobType>copy_file</jobType>
+
+            <command>bigpipe config save f5_gestioip_bck.ucs</command>
+            <return>[[ENABLE_PROMPT]]</return>
+            <command>ftp [[SERVER_IP]]</command>
+            <return>name|Name|User|user</return>
+            <command>[[SERVER_USERNAME]]</command>
+            <return>Pass|pass</return>
+            <command>[[SERVER_PASSWORD]]</command>
+            <return>ftp></return>
+            <command>put /var/local/ucs/f5_gestioip_bck.ucs [[CONFIG_NAME]]</command>
+            <return>Transfer complete</return>
+            <command>quit</command>
+            <return>[[ENABLE_PROMPT]]</return>
+            <command>rm /var/local/ucs/f5_gestioip_bck.ucs</command>
+            <return>[[ENABLE_PROMPT]]</return>
+        </copyUcsFtp11>
+    </jobs>
+
+</deviceGroupValues>

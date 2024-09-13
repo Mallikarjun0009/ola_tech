@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='UTF-8'?> 
+
+<!-- Commands for devices running OpenWrt -->
+
+<deviceGroupValues>
+
+    <deviceGroupName>OpenWrt</deviceGroupName>
+    <deviceGroupID>31</deviceGroupID>
+
+    <models>Backfire</models>
+
+    <loginPrompt></loginPrompt>
+    <enablePrompt>#</enablePrompt>
+    <enableCommand>su -</enableCommand>
+    <usernameExpr>[[GENERIC_USERNAME_EXPR]]</usernameExpr>
+    <passwordExpr>[[GENERIC_PASSWORD_EXPR]]</passwordExpr>
+    <logoutCommand>exit</logoutCommand>
+
+    <jobs>
+        <backupConfigSCP>
+            <comment>Backup configuration with sysupgrade --create-backup</comment>
+            <jobType>copy_file</jobType>
+            <configExtension>tar.gz</configExtension>
+
+            <command>sysupgrade --create-backup /tmp/openwrt_backup_`date +%F`.tar.gz</command>
+            <return>Saving config files...\r*\n*.*[[ENABLE_PROMPT]]</return>
+            <command>scp /tmp/openwrt_backup_`date +%F`.tar.gz [[SERVER_USERNAME]]@[[SERVER_IP]]:[[SERVER_ROOT]]/[[CONFIG_NAME]]</command>
+            <return>[[GENERIC_PASSWORD_EXPR]]</return>
+            <command>[[SERVER_PASSWORD]]</command>
+            <return>100%</return>
+            <command>rm /tmp/openwrt_backup_`date +%F`.tar.gz</command>
+            <return>[[ENABLE_PROMPT]]</return>
+        </backupConfigSCP>
+
+        <restoreConfig>
+            <comment>Restore configuration which was created by sysupgrade --create-backup</comment>
+            <jobType>task</jobType>
+
+            <command>scp [[SERVER_USERNAME]]@[[SERVER_IP]]:[[SERVER_ROOT]]/[[UPLOAD_CONFIG_NAME]] /tmp/backup_to_restore_`date +%F`.tar.gz</command>
+            <return>[[GENERIC_PASSWORD_EXPR]]</return>
+            <command>[[SERVER_PASSWORD]]</command>
+            <return>100%</return>
+            <command>tar -C / -xzf /tmp/backup_to_restore_`date +%F`.tar.gz</command>
+            <return>[[ENABLE_PROMPT]]</return>
+            <command>rm /tmp/backup_to_restore_`date +%F`.tar.gz</command>
+            <return>[[ENABLE_PROMPT]]</return>
+        </restoreConfig>
+
+    </jobs>
+
+</deviceGroupValues>

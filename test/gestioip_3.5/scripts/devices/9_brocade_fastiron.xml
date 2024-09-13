@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='UTF-8'?> 
+
+<!-- Commands for Brocade devices running FastIron OS -->
+
+<deviceGroupValues>
+
+    <deviceGroupName>Brocade FastIron</deviceGroupName>
+    <deviceGroupID>9</deviceGroupID>
+
+    <models>FastIron (ICX)</models>
+
+    <loginPrompt>></loginPrompt>
+    <enablePrompt>#</enablePrompt>
+    <enableCommand>enable</enableCommand>
+    <usernameExpr>[[GENERIC_USERNAME_EXPR]]</usernameExpr>
+    <passwordExpr>[[GENERIC_PASSWORD_EXPR]]</passwordExpr>
+    <logoutCommand>exit</logoutCommand>
+    <pagerExpr></pagerExpr>
+
+    <jobs>
+        <copyRunTftp>
+	    <comment>Backup running config via TFTP</comment>
+            <jobType>copy_file</jobType>
+
+            <command>copy running-config tftp [[SERVER_IP]] [[CONFIG_NAME]]</command>
+            <return>[[ENABLE_PROMPT]]</return>
+        </copyRunTftp>
+
+    </jobs>
+
+</deviceGroupValues>
